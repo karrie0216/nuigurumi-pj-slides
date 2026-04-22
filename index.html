@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>かわいい × ○○ の法則 / 誰に届ける？ — 福岡ECO × AQUA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --eco-green:#2DB84B;
+    --eco-green-dark:#1f9a3b;
+    --eco-green-soft:#e8f6ec;
+    --white:#FFFFFF;
+    --bg:#F5F5F5;
+    --text:#1A1A1A;
+    --text-soft:#555;
+    --text-mute:#888;
+    --accent:#FFE600;
+    --accent-warm:#FFB347;
+    --border:#2DB84B;
+    --card-shadow:0 2px 8px rgba(0,0,0,.06);
+    --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#111;font-family:var(--font);color:var(--text);}
+  deck-stage > section{
+    background:var(--bg);
+    font-family:var(--font);
+    color:var(--text);
+    overflow:hidden;
+    font-size:28px;
+    line-height:1.6;
+  }
+
+  /* ——— Frame (header bar + logo + footer) ——— */
+  .frame-bar{
+    position:absolute;left:0;right:0;top:0;height:8px;background:var(--eco-green);
+  }
+  .frame-logo{
+    position:absolute;top:20px;right:32px;
+    color:var(--eco-green);font-weight:700;font-size:16px;letter-spacing:.02em;
+  }
+  .frame-footer{
+    position:absolute;left:32px;right:32px;bottom:20px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:14px;color:var(--text-mute);
+  }
+  .frame-footer .left{font-weight:400;}
+  .frame-footer .right{font-weight:500;font-variant-numeric:tabular-nums;color:#666;}
+
+  /* ——— Content card ——— */
+  .content{
+    position:absolute;left:48px;right:48px;top:48px;bottom:60px;
+    background:var(--white);
+    border-radius:12px;
+    border-left:4px solid var(--eco-green);
+    box-shadow:var(--card-shadow);
+    padding:44px 56px 40px;
+    display:flex;flex-direction:column;
+  }
+  .content.compact{padding:36px 48px 32px;}
+  .slide-title{
+    font-size:36px;font-weight:700;margin:0 0 20px 0;line-height:1.3;letter-spacing:.01em;
+  }
+  .slide-title .accent{background:linear-gradient(transparent 62%, var(--accent) 62% 92%, transparent 92%);padding:0 .15em;}
+  .slide-sub{font-size:26px;color:var(--text-soft);margin:-12px 0 20px 0;font-weight:500;}
+
+  /* ——— Cover ——— */
+  .cover{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(1200px 600px at 85% 110%, rgba(45,184,75,.12), transparent 60%),
+      radial-gradient(900px 500px at 10% -10%, rgba(255,230,0,.18), transparent 60%),
+      var(--white);
+    display:flex;flex-direction:column;justify-content:center;padding:80px 96px;
+  }
+  .cover .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    color:var(--eco-green);font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;
+    margin-bottom:28px;
+  }
+  .cover .eyebrow::before{content:"";width:32px;height:3px;background:var(--eco-green);border-radius:2px;}
+  .cover h1{
+    font-size:60px;font-weight:900;line-height:1.2;margin:0 0 18px 0;letter-spacing:.01em;
+  }
+  .cover h1 .hl{background:linear-gradient(transparent 60%, var(--accent) 60% 92%, transparent 92%);padding:0 .12em;}
+  .cover .subtitle{
+    font-size:24px;font-weight:500;color:var(--text-soft);line-height:1.55;margin:0 0 36px 0;max-width:900px;
+  }
+  .cover .meta{
+    display:flex;gap:40px;font-size:18px;color:var(--text-soft);font-weight:500;
+  }
+  .cover .meta strong{color:var(--text);font-weight:700;}
+  .cover .proj-badge{
+    position:absolute;right:48px;bottom:48px;
+    background:var(--eco-green);color:#fff;font-weight:700;font-size:15px;
+    padding:12px 20px;border-radius:999px;letter-spacing:.02em;
+    box-shadow:0 4px 14px rgba(45,184,75,.35);
+  }
+  .cover .logo-block{
+    position:absolute;top:48px;right:48px;text-align:right;
+    font-size:14px;color:var(--text-soft);line-height:1.5;
+  }
+  .cover .logo-block .nm{color:var(--eco-green);font-weight:700;font-size:16px;}
+
+  /* ——— Common elements ——— */
+  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--eco-green);color:#fff;font-weight:700;font-size:18px;padding:6px 14px;border-radius:999px;}
+  .time-badge{
+    position:absolute;top:56px;left:64px;
+    background:var(--eco-green);color:#fff;font-weight:700;font-size:24px;
+    padding:10px 20px;border-radius:999px;letter-spacing:.03em;
+    box-shadow:0 3px 10px rgba(45,184,75,.3);
+    z-index:5;
+  }
+  /* Work slides: push the section-head + title right so the time-badge doesn't overlap */
+  .content.has-badge{padding-left:200px;}
+  .content.has-badge.compact{padding-left:190px;}
+  .time-badge.red{background:#e53935;box-shadow:0 3px 10px rgba(229,57,53,.3);}
+  .emphasis-box{
+    background:var(--eco-green);color:#fff;padding:22px 28px;border-radius:12px;
+    font-weight:700;font-size:28px;line-height:1.5;
+  }
+  .highlight-box{
+    background:var(--accent);color:var(--text);padding:18px 24px;border-radius:10px;
+    font-weight:700;font-size:26px;line-height:1.55;
+  }
+  .note-box{
+    background:var(--eco-green-soft);border-left:4px solid var(--eco-green);
+    padding:18px 24px;border-radius:8px;font-size:26px;line-height:1.55;
+  }
+  .quote-box{
+    background:#fafafa;border-left:4px solid var(--accent-warm);
+    padding:22px 28px;border-radius:10px;font-size:26px;line-height:1.6;font-style:italic;color:#333;
+    position:relative;
+  }
+  .quote-box::before{content:”””;position:absolute;top:-6px;left:14px;font-size:56px;color:var(--accent-warm);line-height:1;font-family:serif;font-style:normal;}
+  .quote-box .attr{display:block;margin-top:10px;font-size:20px;color:var(--text-mute);font-style:normal;text-align:right;}
+
+  /* ——— Image placeholder ——— */
+  .img-placeholder{
+    background:#E8E8E8;border:2px dashed #AAAAAA;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    color:#666;font-size:18px;font-weight:500;text-align:center;padding:20px;
+    min-height:200px;width:100%;
+  }
+  .img-placeholder span{display:block;}
+
+  /* ——— Tables / timelines ——— */
+  .timeline-table{
+    width:100%;border-collapse:separate;border-spacing:0;font-size:22px;
+    background:#fff;border-radius:10px;overflow:hidden;
+    box-shadow:0 1px 4px rgba(0,0,0,.04);
+  }
+  .timeline-table th{
+    background:var(--eco-green);color:#fff;font-weight:700;padding:10px 18px;text-align:left;font-size:22px;
+  }
+  .timeline-table td{padding:10px 18px;border-bottom:1px solid #eee;}
+  .timeline-table tr:last-child td{border-bottom:none;}
+  .timeline-table .tcol{width:200px;font-weight:700;color:var(--eco-green);font-variant-numeric:tabular-nums;}
+  .timeline-table tr.wk td{background:#fffbea;}
+
+  /* ——— Grid card layouts ——— */
+  .cards{display:grid;gap:20px;}
+  .cards.c3{grid-template-columns:repeat(3,1fr);}
+  .cards.c4{grid-template-columns:repeat(4,1fr);}
+  .cards.c2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    background:#fff;border:1.5px solid #e5e5e5;border-radius:12px;padding:22px 22px;
+    display:flex;flex-direction:column;gap:10px;
+    transition:transform .2s;
+  }
+  .card.green{border-color:var(--eco-green);background:var(--eco-green-soft);}
+  .card.green-fill{border-color:var(--eco-green);background:var(--eco-green);color:#fff;}
+  .card .num{
+    font-size:22px;font-weight:900;color:var(--eco-green);
+  }
+  .card .big-num{
+    font-size:44px;font-weight:900;color:var(--eco-green);line-height:1;margin-bottom:4px;
+  }
+  .card .label{font-size:22px;color:var(--text-soft);font-weight:500;}
+  .card .ttl{font-size:26px;font-weight:700;line-height:1.3;}
+  .card .body{font-size:22px;color:var(--text-soft);line-height:1.55;}
+  .card .emoji{font-size:34px;line-height:1;}
+
+  /* ——— Bullet list ——— */
+  .bul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .bul li{position:relative;padding-left:28px;font-size:26px;line-height:1.55;}
+  .bul li::before{
+    content:"";position:absolute;left:4px;top:14px;
+    width:10px;height:10px;background:var(--eco-green);border-radius:50%;
+  }
+  .bul.sm li{font-size:22px;}
+  .bul li strong{font-weight:700;}
+  .bul li .pin{color:var(--eco-green);font-weight:700;}
+
+  /* ——— Two-column ——— */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:32px;flex:1;align-items:stretch;}
+  .twocol.narrow{gap:24px;}
+
+  /* ——— Section divider slide ——— */
+  .section-slide{
+    position:absolute;inset:0;background:var(--eco-green);color:#fff;
+    display:flex;flex-direction:column;justify-content:center;padding:0 120px;
+  }
+  .section-slide .tag{
+    font-size:20px;font-weight:700;letter-spacing:.3em;opacity:.85;margin-bottom:24px;
+  }
+  .section-slide h2{
+    font-size:108px;font-weight:900;margin:0 0 24px 0;line-height:1;letter-spacing:.02em;
+  }
+  .section-slide .desc{
+    font-size:32px;font-weight:500;line-height:1.5;max-width:1000px;opacity:.95;
+  }
+  .section-slide::before{
+    content:"";position:absolute;right:-200px;bottom:-200px;width:700px;height:700px;
+    border-radius:50%;background:rgba(255,255,255,.08);
+  }
+  .section-slide::after{
+    content:"";position:absolute;left:-100px;top:-100px;width:340px;height:340px;
+    border-radius:50%;background:rgba(255,230,0,.18);
+  }
+
+  /* ——— Tag grid (×○○ 一覧) ——— */
+  .taggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .tag-chip{
+    background:#fff;border:2px solid var(--eco-green);border-radius:999px;
+    padding:14px 18px;font-size:22px;font-weight:700;text-align:center;color:var(--text);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .tag-chip.alt{background:var(--eco-green);color:#fff;}
+  .tag-chip.yellow{background:var(--accent);border-color:#e6cf00;}
+
+  /* ——— Step list ——— */
+  .steps{display:flex;flex-direction:column;gap:14px;}
+  .step{display:flex;gap:18px;align-items:flex-start;background:#fafafa;border-radius:10px;padding:14px 18px;}
+  .step .n{
+    flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--eco-green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;
+  }
+  .step .body{font-size:26px;line-height:1.5;padding-top:4px;}
+  .step .body strong{font-weight:700;}
+
+  /* ——— Arrow ——— */
+  .arrow{color:var(--eco-green);font-weight:900;font-size:22px;}
+
+  /* QnA style */
+  .big-q{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:20px;
+  }
+  .big-q .qmark{
+    font-size:180px;font-weight:900;color:var(--eco-green);line-height:1;
+    text-shadow:6px 6px 0 rgba(45,184,75,.15);
+  }
+  .big-q .text{font-size:32px;font-weight:700;max-width:800px;line-height:1.5;}
+
+  /* Center-big statement */
+  .center-stage{
+    flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:24px;text-align:center;
+  }
+  .big-statement{font-size:44px;font-weight:900;line-height:1.4;max-width:1000px;}
+  .big-statement .hl{background:linear-gradient(transparent 62%, var(--accent) 62% 92%, transparent 92%);padding:0 .1em;}
+
+  /* Persona box */
+  .persona{
+    background:var(--eco-green);color:#fff;border-radius:12px;padding:22px 26px;
+    font-size:24px;line-height:1.7;
+  }
+  .persona .nm{font-size:30px;font-weight:900;display:block;margin-bottom:4px;}
+  .persona ul{margin:8px 0 0 0;padding-left:22px;}
+  .persona ul li{margin:2px 0;}
+
+  /* Vs compare */
+  .vs-col{border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px;}
+  .vs-col.gray{background:#eee;color:var(--text-soft);}
+  .vs-col.green{background:var(--eco-green);color:#fff;}
+  .vs-col .ttl{font-size:28px;font-weight:900;letter-spacing:.05em;}
+  .vs-col .body{font-size:26px;font-weight:500;}
+  .vs-col .arrow-line{font-size:20px;opacity:.8;margin-top:6px;}
+
+  /* Pair icon */
+  .pair-icon{display:flex;justify-content:center;gap:40px;margin:16px 0 20px 0;}
+  .pair-icon .person{
+    width:80px;height:80px;border-radius:50%;background:var(--eco-green-soft);
+    border:3px solid var(--eco-green);display:flex;align-items:center;justify-content:center;font-size:40px;
+  }
+
+  /* Homework slide */
+  .hw-card{
+    flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;text-align:center;
+    background:var(--eco-green-soft);border:2px dashed var(--eco-green);border-radius:16px;padding:40px;
+  }
+  .hw-card .emoji{font-size:60px;}
+  .hw-card .ttl{font-size:36px;font-weight:900;line-height:1.4;}
+  .hw-card .sub{font-size:22px;color:var(--text-soft);}
+
+  /* Schedule table */
+  .schedule{width:100%;border-collapse:separate;border-spacing:0;font-size:24px;background:#fff;border-radius:10px;overflow:hidden;}
+  .schedule th{background:var(--accent-warm);color:#fff;padding:14px 18px;text-align:left;font-size:24px;}
+  .schedule td{padding:14px 18px;border-bottom:1px solid #eee;vertical-align:top;}
+  .schedule tr:last-child td{border-bottom:none;}
+  .schedule .date{font-weight:900;color:var(--eco-green);width:140px;white-space:nowrap;}
+  .schedule .theme{font-weight:700;width:260px;}
+
+  /* Print */
+  @media print{
+    body{background:#fff;}
+  }
+
+  /* Subhead badge for ranges */
+  .section-head{
+    background:var(--accent-warm);color:#fff;font-weight:900;font-size:24px;
+    padding:8px 18px;border-radius:6px;display:inline-block;margin-bottom:12px;
+  }
+
+  /* compact layout */
+  .flex1{flex:1;}
+  .mt-a{margin-top:auto;}
+  .mb-a{margin-bottom:auto;}
+  .gap-s{gap:12px;}
+  .gap-m{gap:20px;}
+  .gap-l{gap:28px;}
+  .col{display:flex;flex-direction:column;}
+  .row{display:flex;}
+  .center-h{justify-content:center;}
+  .center-v{align-items:center;}
+  .bold{font-weight:700;}
+  .mute{color:var(--text-soft);}
+</style>
+</head>
+<body>
+
+<deck-stage width="1280" height="720">
+
+<!-- =========================================================
+     SLIDE 1 : COVER
+========================================================= -->
+<section data-label="表紙">
+  <div class="cover">
+    <div class="logo-block">
+      <div class="nm">福岡ECO動物海洋専門学校</div>
+      <div>株式会社AQUA 企業プロジェクト</div>
+    </div>
+    <div class="eyebrow">FUKUOKA ECO × AQUA / 第2回講義</div>
+    <h1>かわいい × <span class="hl">○○</span> の法則</h1>
+    <div class="subtitle">
+      あなたのアイデアに名前をつける<br>
+      誰に届ける？ ペルソナを体験で理解する
+    </div>
+    <div class="meta">
+      <div><strong>日付</strong> ／ 2026年4月23日（水）</div>
+      <div><strong>主催</strong> ／ 株式会社ATARAYO</div>
+      <div><strong>講師</strong> ／ 関口・橋本</div>
+    </div>
+    <div class="proj-badge">株式会社AQUA × 福岡ECO 企業プロジェクト</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 2 : 1コマ目タイムライン
+========================================================= -->
+<section data-label="1コマ目 タイムライン">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <div class="section-head" style="margin-bottom:8px;">1コマ目（90分）</div>
+    <h2 class="slide-title" style="font-size:30px;margin-bottom:12px;">かわいい × ○○ の法則 ─ <span class="accent">タイムライン</span></h2>
+    <table class="timeline-table" style="font-size:20px;">
+      <thead><tr><th class="tcol" style="padding:7px 16px;font-size:20px;">時間</th><th style="padding:7px 16px;">内容</th></tr></thead>
+      <tbody>
+        <tr><td class="tcol" style="padding:7px 16px;">0〜5分</td><td style="padding:7px 16px;">オープニング</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">5〜15分</td><td style="padding:7px 16px;">AQUAオリエンテーション振り返り</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">15〜35分</td><td style="padding:7px 16px;">他社事例4選（クイズ形式）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:7px 16px;">35〜45分</td><td style="padding:7px 16px;">ワーク① ×○○ラベル付け（10分）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:7px 16px;">45〜58分</td><td style="padding:7px 16px;">ワーク② ペアでアイデア交換（13分）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:7px 16px;">58〜61分</td><td style="padding:7px 16px;">発表準備（3分）</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">61〜85分</td><td style="padding:7px 16px;">全体シェア</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">85〜90分</td><td style="padding:7px 16px;">まとめ</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">2 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 3 : AQUAオリエンテーション振り返り
+========================================================= -->
+<section data-label="AQUA 振り返り">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUAオリエンテーション <span class="accent">振り返り</span></h2>
+    <div class="cards c3" style="margin-top:8px;">
+      <div class="card green">
+        <div class="big-num">36</div>
+        <div class="ttl">直営店 店舗</div>
+        <div class="body">全国で展開する自社運営店舗数</div>
+      </div>
+      <div class="card green">
+        <div class="big-num">350+</div>
+        <div class="ttl">卸先 箇所</div>
+        <div class="body">ぬいぐるみを取り扱う販売チャネル</div>
+      </div>
+      <div class="card green">
+        <div class="big-num">80万</div>
+        <div class="ttl">体／年</div>
+        <div class="body">年間の製造・販売規模</div>
+      </div>
+    </div>
+    <div class="emphasis-box" style="margin-top:auto;">
+      🏆 優秀な提案は <u>商品化</u> → <u>インターン参加</u> → <u>報酬あり</u>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">3 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 4 : AQUA事例① 食物連鎖
+========================================================= -->
+<section data-label="AQUA事例① 食物連鎖">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUA事例① <span class="accent">食物連鎖ぬいぐるみ</span></h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div style="flex:1;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="images/食物連鎖.jpg" style="width:100%;height:auto;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li><strong>ネットで大ヒット</strong></li>
+          <li>店頭では売れ方が違った<br><span class="mute" style="font-size:20px;">→ 理由：数秒では魅力が伝わらない</span></li>
+        </ul>
+        <div class="note-box mt-a">
+          <span class="pill" style="margin-bottom:8px;">📌 ポイント</span><br>
+          <strong style="font-size:24px;">「魅力は本物でも、<br>見せ方・状況で結果が変わる」</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">4 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 5 : AQUA事例② ガブッとシリーズ
+========================================================= -->
+<section data-label="AQUA事例② ガブッと">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUA事例② <span class="accent">ガブッとシリーズ</span></h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div style="flex:1;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          <img src="images/ガブッとシリーズ.jpg" style="width:100%;height:auto;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li>袋に入れたまま → <strong>全く売れなかった</strong></li>
+          <li>手を入れると目が合う状態で陳列 → <strong>大ヒット</strong></li>
+          <li>商品は変わっていない。<br><span class="pin">見せ方だけが変わった</span></li>
+        </ul>
+        <div class="note-box mt-a">
+          <span class="pill" style="margin-bottom:8px;">📌 ポイント</span><br>
+          <strong style="font-size:24px;">「体験させたか、させなかったか。<br>それだけの違い」</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">5 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 6 : AQUA事例③④⑤
+========================================================= -->
+<section data-label="AQUA事例③④⑤">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title">AQUA事例 <span class="accent">③ ④ ⑤</span></h2>
+    <div class="cards c3" style="flex:1;">
+      <div class="card green">
+        <div class="num">③</div>
+        <div class="ttl">くるりんバンド</div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;">
+          <img src="images/くるりんバンド.jpg" style="width:100%;height:160px;object-fit:contain;display:block;">
+        </div>
+        <div class="body">バッグ・腕に巻きつけられる。<br>親の安心感 ＋ 子どもの予想外の遊び方が生まれた。</div>
+      </div>
+      <div class="card green">
+        <div class="num">④</div>
+        <div class="ttl">エスキモーハウス</div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;">
+          <img src="images/エスキモーハウス.jpg" style="width:100%;height:160px;object-fit:contain;display:block;">
+        </div>
+        <div class="body">価格高め。でも売れる。<br>「帰りの車で大人しく遊ぶ子ども」が買う前から想像できる。</div>
+      </div>
+      <div class="card green">
+        <div class="num">⑤</div>
+        <div class="ttl">たっぷりパペット</div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;">
+          <img src="images/たっぷりパペット.jpg" style="width:100%;height:160px;object-fit:contain;display:block;">
+        </div>
+        <div class="body">自立して飾れるよう少し改良 → <strong>シェア拡大</strong>。</div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">6 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 7 : AQUAの共通点
+========================================================= -->
+<section data-label="AQUA共通点">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">5つの事例に <span class="accent">共通していること</span></h2>
+    <div class="center-stage">
+      <div class="big-statement">
+        ただ <span style="color:var(--text-mute);">「かわいい」</span> だけじゃない。<br>
+        それぞれに <span class="hl">もう1つの価値</span> がある。
+      </div>
+      <div class="quote-box" style="max-width:860px;margin-top:16px;">
+        575の俳句のように、制約の中で<br>自分の世界観を形にしてほしい。
+        <span class="attr">— 株式会社AQUA 代表</span>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">7 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 8 : 今回の条件
+========================================================= -->
+<section data-label="今回の条件">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title" style="font-size:30px;margin-bottom:14px;">AQUAからの条件（<span class="accent">クライアント指定</span>）</h2>
+    <div class="cards c2" style="flex:1;gap:14px;">
+      <div class="card green">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:28px;">🐧</span>
+          <div class="ttl" style="font-size:22px;">テーマ</div>
+        </div>
+        <div style="font-size:24px;font-weight:700;color:var(--text);">ペンギン</div>
+        <div style="font-size:18px;color:var(--text-soft);line-height:1.5;">水族館でも動物園でも販売しやすいため</div>
+      </div>
+      <div class="card green">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:28px;">👤</span>
+          <div class="ttl" style="font-size:22px;">ターゲット</div>
+        </div>
+        <div style="font-size:22px;font-weight:700;color:var(--text);">同世代（高校生・専門学生・大学生）</div>
+        <div style="font-size:18px;color:var(--text-soft);line-height:1.5;">みなさん自身が「これ欲しい」と思えるものを</div>
+      </div>
+      <div class="card green">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:28px;">🎨</span>
+          <div class="ttl" style="font-size:22px;">素材・形状</div>
+        </div>
+        <div style="font-size:20px;font-weight:700;color:var(--text);">完全自由</div>
+        <div style="font-size:17px;color:var(--text-soft);line-height:1.5;">ぬいぐるみ縛りなし／時計など雑貨との組み合わせOK／和紙など新素材OK／ペンギンの生態に縛られなくてOK</div>
+      </div>
+      <div class="card green">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:28px;">💰</span>
+          <div class="ttl" style="font-size:22px;">価格設定</div>
+        </div>
+        <div style="font-size:20px;font-weight:700;color:var(--text);">「安ければ売れる」はNG</div>
+        <div style="font-size:17px;color:var(--text-soft);line-height:1.5;">ダイソーと差別化できる付加価値（機能・思い出・品質）を考え、納得感のある価格帯を自分で設定して提案する</div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">8 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 9 : 他社事例クイズ冒頭
+========================================================= -->
+<section data-label="クイズ冒頭">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">他社でのヒット事例 / <span class="accent">まず見て考えてみて</span></h2>
+    <div class="big-q">
+      <div class="qmark">?</div>
+      <div class="text">
+        商品の写真を見て、<br>
+        「かわいい × <span style="color:var(--eco-green);">○○</span>」の <span class="hl" style="background:linear-gradient(transparent 62%, var(--accent) 62% 92%, transparent 92%);padding:0 .1em;">○○ が何か</span>、<br>
+        答えてみよう。
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">9 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 10 : Squishmallows 問
+========================================================= -->
+<section data-label="Squishmallows 問">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">これ、なんで <span class="accent">2億個</span> 売れた？</h2>
+    <div class="center-stage" style="gap:20px;">
+      <div style="width:60%;height:460px;border-radius:10px;overflow:hidden;">
+        <img src="images/Squishmallows.jpg" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+      <div class="mute" style="font-size:22px;">触ってみたい感じ？ 誰が欲しそう？</div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">10 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 11 : Squishmallows 答
+========================================================= -->
+<section data-label="Squishmallows 答">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">Squishmallows <span style="color:var(--text-soft);font-weight:500;font-size:28px;">（スクイッシュマロ）</span></h2>
+    <div class="twocol">
+      <div class="col">
+        <div style="flex:1;border-radius:10px;overflow:hidden;">
+          <img src="images/Squishmallows2.jpg" style="width:100%;max-height:400px;object-fit:contain;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li>世界 <strong>2億個</strong> 以上販売（アメリカ発）</li>
+          <li>もちもちふわふわの <strong>触り心地</strong></li>
+          <li>全キャラに <strong>名前</strong> → コレクション文化</li>
+          <li>SNSで「何個集めたか」を投稿</li>
+        </ul>
+        <div class="emphasis-box mt-a" style="font-size:22px;">
+          ✅ かわいい × <span style="background:var(--accent);color:var(--text);padding:2px 8px;border-radius:4px;">触り心地</span> × <span style="background:var(--accent);color:var(--text);padding:2px 8px;border-radius:4px;">コレクション性</span> × <span style="background:var(--accent);color:var(--text);padding:2px 8px;border-radius:4px;">SNS映え</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">11 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 12 : Jellycat 問
+========================================================= -->
+<section data-label="Jellycat 問">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">誰が買うと <span class="accent">思いますか？</span></h2>
+    <div class="center-stage">
+      <div style="width:60%;height:460px;border-radius:10px;overflow:hidden;">
+        <img src="images/jerrycat.jpg" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">12 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 13 : Jellycat 答
+========================================================= -->
+<section data-label="Jellycat 答">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">Jellycat <span style="color:var(--text-soft);font-weight:500;font-size:28px;">（ジェリーキャット）</span></h2>
+    <div class="twocol">
+      <div class="col">
+        <div style="flex:1;border-radius:10px;overflow:hidden;">
+          <img src="images/Jellycat2.png" style="width:100%;max-height:400px;object-fit:contain;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li>イギリス発。<strong>大人が自分のために</strong>買う</li>
+          <li>部屋に置いても <strong>インテリア</strong> として成立</li>
+          <li>出産祝い・誕生日プレゼントとして選ばれる</li>
+        </ul>
+        <div class="emphasis-box" style="font-size:22px;">
+          ✅ かわいい × <span style="background:var(--accent);color:var(--text);padding:2px 8px;border-radius:4px;">おしゃれ・インテリア性</span>
+        </div>
+        <div class="note-box mt-a" style="font-size:20px;">
+          ぬいぐるみを <strong>「子どものもの」</strong> から<br><strong>「大人のライフスタイル」</strong> に変えた
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">13 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 14 : Labubu 問
+========================================================= -->
+<section data-label="Labubu 問">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">かわいい？ こわい？ <span class="accent">率直にどう思う？</span></h2>
+    <div class="center-stage">
+      <div style="width:60%;height:460px;border-radius:10px;overflow:hidden;">
+        <img src="images/Labubu.jpg" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">14 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 15 : Labubu 答
+========================================================= -->
+<section data-label="Labubu 答">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title">Labubu <span style="color:var(--text-soft);font-weight:500;font-size:28px;">（ラブブ）</span></h2>
+    <div class="twocol">
+      <div class="col">
+        <div style="flex:1;border-radius:10px;overflow:hidden;">
+          <img src="images/Labubu2.jpg" style="width:100%;max-height:400px;object-fit:contain;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-s">
+        <ul class="bul sm">
+          <li>もこもこの体 ＋ 大きな目 ＋ <strong>ガタガタの歯</strong></li>
+          <li>BLACKPINKのLisaが紹介 → 世界で爆発</li>
+          <li><strong>ブラインドボックス</strong>：箱を開けるまで何が入っているかわからない</li>
+        </ul>
+        <div class="emphasis-box" style="font-size:20px;padding:14px 18px;">
+          ✅ かわいい × <span style="background:var(--accent);color:var(--text);padding:2px 6px;border-radius:4px;">ちょっと怖い</span> × <span style="background:var(--accent);color:var(--text);padding:2px 6px;border-radius:4px;">開封のドキドキ感</span>
+        </div>
+        <div class="note-box" style="font-size:20px;">
+          📌 <strong>かわいいだけが勝ちではない</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">15 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 16 : ふんばるず 問
+========================================================= -->
+<section data-label="ふんばるず 問">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">これ、何に使うものだと <span class="accent">思いますか？</span></h2>
+    <div class="center-stage" style="gap:20px;">
+      <div style="width:60%;height:460px;border-radius:10px;overflow:hidden;">
+        <img src="images/ふんばるず.jpg" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+      <div class="mute" style="font-size:22px;">どこに置く？ どうやって使う？</div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">16 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 17 : ふんばるず 答
+========================================================= -->
+<section data-label="ふんばるず 答">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title">ふんばるず <span style="color:var(--text-soft);font-weight:500;font-size:28px;">（ドリームズ）</span></h2>
+    <div class="twocol">
+      <div class="col">
+        <div style="flex:1;border-radius:10px;overflow:hidden;">
+          <img src="images/ふんばるず2.jpg" style="width:100%;max-height:400px;object-fit:contain;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-s">
+        <ul class="bul sm">
+          <li>机とお腹の間に挟む → 自然と<strong>背筋が伸びる</strong>猫背サポート</li>
+          <li>職場のデスクに置いても浮かない</li>
+          <li><strong>ちいかわコラボ</strong>でバズ</li>
+        </ul>
+        <div class="emphasis-box" style="font-size:22px;padding:14px 18px;">
+          ✅ かわいい × <span style="background:var(--accent);color:var(--text);padding:2px 8px;border-radius:4px;">実用性（姿勢矯正）</span>
+        </div>
+        <div class="note-box" style="font-size:20px;">
+          📌 ぬいぐるみが <strong>機能を持った</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">17 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 18 : かわいい × ○○ 一覧
+========================================================= -->
+<section data-label="×○○ 一覧">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">かわいい × <span class="accent">○○</span> の一覧</h2>
+    <div class="taggrid" style="flex:1;align-content:center;">
+      <div class="tag-chip">学び・知育</div>
+      <div class="tag-chip">体験・使える</div>
+      <div class="tag-chip">身につけられる</div>
+      <div class="tag-chip">ストーリー性</div>
+      <div class="tag-chip alt">一緒に遊べる</div>
+      <div class="tag-chip">触り心地</div>
+      <div class="tag-chip">コレクション性</div>
+      <div class="tag-chip alt">SNS映え</div>
+      <div class="tag-chip">大人のインテリア</div>
+      <div class="tag-chip yellow">ちょっと怖い</div>
+      <div class="tag-chip yellow">ドキドキ感</div>
+      <div class="tag-chip alt">機能性（実用性）</div>
+    </div>
+    <div style="margin-top:16px;text-align:center;font-size:24px;font-weight:700;color:var(--eco-green);">
+      自分のアイデアと重なるものはありますか？
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">18 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 19 : ワーク① ×○○ラベル付け
+========================================================= -->
+<section data-label="ワーク① ラベル付け">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 10分</div>
+  <div class="content has-badge">
+    <div class="section-head">WORK 01</div>
+    <h2 class="slide-title">ワーク① あなたのアイデアに <span class="accent">名前をつける</span></h2>
+    <div class="steps" style="gap:10px;">
+      <div class="step" style="padding:10px 16px;"><div class="n">1</div><div class="body" style="font-size:20px;">宿題で出したアイデアを <strong>全部手元に出す</strong></div></div>
+      <div class="step" style="padding:10px 16px;"><div class="n">2</div><div class="body" style="font-size:20px;">1つひとつに「かわいい × <strong style="color:var(--eco-green);">○○</strong>」の ○○ を書き込む</div></div>
+      <div class="step" style="padding:10px 16px;"><div class="n">3</div><div class="body" style="font-size:20px;">一覧を参考にしていい。<strong>新しい○○</strong>を作ってもOK</div></div>
+      <div class="step" style="padding:10px 16px;"><div class="n">4</div><div class="body" style="font-size:20px;">複数の○○があってもOK</div></div>
+      <div class="step" style="padding:10px 16px;"><div class="n">5</div><div class="body" style="font-size:20px;">新しいアイデアが浮かんだら <strong>追加してOK</strong></div></div>
+    </div>
+    <div class="note-box" style="margin-top:12px;font-size:19px;line-height:1.5;padding:12px 18px;">
+      <strong style="color:var(--eco-green);">例：</strong>
+      ペンギンが本棚にいる → <strong>インテリア性</strong> ／
+      ペンギン時計 → <strong>実用性</strong> ／
+      食物連鎖ペンギン → <strong>学び</strong>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">19 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 20 : ワーク② アイデア交換
+========================================================= -->
+<section data-label="ワーク② ペア交換">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 13分</div>
+  <div class="content has-badge">
+    <div class="section-head">WORK 02</div>
+    <h2 class="slide-title">ワーク② <span class="accent">アイデア交換ワーク</span></h2>
+    <div class="pair-icon">
+      <div class="person">🧑</div>
+      <div style="align-self:center;font-size:32px;color:var(--eco-green);">↔</div>
+      <div class="person">🧑</div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="body"><strong style="color:var(--eco-green);">【3分】</strong>一番面白いアイデアを相手に話す（○○も一緒に）</div></div>
+      <div class="step"><div class="n">2</div><div class="body"><strong style="color:var(--eco-green);">【5分】</strong>相手のアイデアに <strong>自分なら別の○○</strong> を貼り直してみる</div></div>
+      <div class="step"><div class="n">3</div><div class="body"><strong style="color:var(--eco-green);">【2〜3分】</strong>「こう変えたらどう？」を伝え合う</div></div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">20 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 21 : 発表準備
+========================================================= -->
+<section data-label="発表準備">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 3分</div>
+  <div class="content has-badge">
+    <h2 class="slide-title">発表の準備をしよう（<span class="accent">3分</span>）</h2>
+    <div class="cards c3" style="flex:1;">
+      <div class="card green">
+        <div class="big-num" style="font-size:36px;">①</div>
+        <div class="ttl">アイデアは何か</div>
+        <ul style="font-size:18px;margin:6px 0 0 0;padding-left:18px;color:var(--text-soft);line-height:1.85;">
+          <li>「○○なペンギングッズ」と一文で説明できる？</li>
+          <li>形・素材・色でイメージを具体的に伝えよう</li>
+          <li>だいたいの値段イメージもあれば添えて</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="big-num" style="font-size:36px;">②</div>
+        <div class="ttl">かわいい × ○○</div>
+        <ul style="font-size:18px;margin:6px 0 0 0;padding-left:18px;color:var(--text-soft);line-height:1.85;">
+          <li>ラベルは何？（×癒し・×機能・×なつかしさ など）</li>
+          <li>そのラベルにした理由は？</li>
+          <li>商品のどこに「○○」が出ている？</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="big-num" style="font-size:36px;">③</div>
+        <div class="ttl">一番のポイント</div>
+        <ul style="font-size:18px;margin:6px 0 0 0;padding-left:18px;color:var(--text-soft);line-height:1.85;">
+          <li>同世代が「これ欲しい！」と思う理由</li>
+          <li>ダイソーなど既存品には<strong>ない</strong>魅力は？</li>
+          <li>値段に納得してもらえる理由（機能・デザイン・思い出）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box" style="text-align:center;">
+      3つ合わせて <strong>2分</strong> で話せる量です。メモを見ながらでOK！
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">21 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 22 : 全体シェア
+========================================================= -->
+<section data-label="全体シェア">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">全体シェア / <span class="accent">一押しのアイデアを教えてください</span></h2>
+    <div class="cards c3" style="flex:1;">
+      <div class="card green-fill">
+        <div class="big-num" style="color:#fff;opacity:.9;font-size:36px;">①</div>
+        <div class="ttl">アイデアを一言で</div>
+        <ul style="font-size:18px;margin:6px 0 0 0;padding-left:18px;color:rgba(255,255,255,.92);line-height:1.85;">
+          <li>「○○なペンギングッズ」と一文で説明できる？</li>
+          <li>形・素材・色でイメージを具体的に伝えよう</li>
+          <li>だいたいの値段イメージもあれば添えて</li>
+        </ul>
+      </div>
+      <div class="card green-fill">
+        <div class="big-num" style="color:#fff;opacity:.9;font-size:36px;">②</div>
+        <div class="ttl">かわいい × ○○</div>
+        <ul style="font-size:18px;margin:6px 0 0 0;padding-left:18px;color:rgba(255,255,255,.92);line-height:1.85;">
+          <li>ラベルは何？（×癒し・×機能・×なつかしさ など）</li>
+          <li>そのラベルにした理由は？</li>
+          <li>商品のどこに「○○」が出ている？</li>
+        </ul>
+      </div>
+      <div class="card green-fill">
+        <div class="big-num" style="color:#fff;opacity:.9;font-size:36px;">③</div>
+        <div class="ttl">一番のポイント</div>
+        <ul style="font-size:18px;margin:6px 0 0 0;padding-left:18px;color:rgba(255,255,255,.92);line-height:1.85;">
+          <li>同世代が「これ欲しい！」と思う理由</li>
+          <li>ダイソーなど既存品にはない魅力は？</li>
+          <li>値段に納得してもらえる理由（機能・デザイン・思い出）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box" style="text-align:center;">
+      🙌 聞いている人へ：<strong>ダメ出し禁止</strong>。うなずく ＋ 拍手でOK
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">22 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 23 : 1コマ目まとめ
+========================================================= -->
+<section data-label="1コマ目まとめ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">1コマ目の <span class="accent">まとめ</span></h2>
+    <div class="center-stage">
+      <div class="big-statement">
+        ただ <span style="color:var(--text-mute);">「かわいい」</span> だけではヒットしない。<br><br>
+        「かわいい ＋ <span class="hl">もう1つの価値</span>」の<br>
+        ラベルが言えると、<br>
+        <strong>商品の説明ができる</strong>ようになる。
+      </div>
+    </div>
+    <div class="note-box" style="text-align:center;margin-top:12px;">
+      → 2コマ目：<strong>誰に届けるか</strong>を深めていきます
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">23 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 24 : 2コマ目セクション区切り
+========================================================= -->
+<section data-label="2コマ目 開始">
+  <div class="section-slide">
+    <div class="tag">SESSION 02</div>
+    <h2>2コマ目</h2>
+    <div class="desc">
+      誰に届ける？<br>
+      ─ ペルソナを体験で理解する
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 25 : 2コマ目タイムライン
+========================================================= -->
+<section data-label="2コマ目 タイムライン">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <div class="section-head" style="margin-bottom:8px;">2コマ目（90分）</div>
+    <h2 class="slide-title" style="font-size:30px;margin-bottom:12px;">誰に届ける？ ─ <span class="accent">タイムライン</span></h2>
+    <table class="timeline-table" style="font-size:20px;">
+      <thead><tr><th class="tcol" style="padding:7px 16px;font-size:20px;">時間</th><th style="padding:7px 16px;">内容</th></tr></thead>
+      <tbody>
+        <tr><td class="tcol" style="padding:7px 16px;">0〜5分</td><td style="padding:7px 16px;">イントロ</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">5〜18分</td><td style="padding:7px 16px;">ミニ講義：ペルソナとは</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:7px 16px;">18〜33分</td><td style="padding:7px 16px;">ワーク①：スタンレーのペルソナ（15分）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:7px 16px;">33〜48分</td><td style="padding:7px 16px;">ワーク②：自分で選んでペルソナ（15分）</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">48〜57分</td><td style="padding:7px 16px;">ペアシェア（9分）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:7px 16px;">57〜72分</td><td style="padding:7px 16px;">ワーク③：自分のぬいぐるみでペルソナ（15分）</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">72〜83分</td><td style="padding:7px 16px;">全体シェア</td></tr>
+        <tr><td class="tcol" style="padding:7px 16px;">83〜90分</td><td style="padding:7px 16px;">クロージング・宿題</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">25 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 26 : ターゲット vs ペルソナ
+========================================================= -->
+<section data-label="ターゲット vs ペルソナ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title" style="font-size:30px;margin-bottom:14px;">ターゲット <span style="color:var(--text-mute);">VS</span> <span class="accent">ペルソナ</span></h2>
+    <div class="twocol" style="gap:20px;">
+      <div class="vs-col gray">
+        <div class="ttl">ターゲット</div>
+        <div class="body" style="font-size:22px;font-weight:700;color:var(--text);">「高校生・大学生です」</div>
+        <div class="arrow-line">→ あいまいすぎる</div>
+        <div class="arrow-line">→ 具体的に設計できない</div>
+      </div>
+      <div class="vs-col green" style="overflow:hidden;gap:6px;">
+        <div class="ttl">ペルソナ</div>
+        <div style="font-size:18px;font-weight:700;line-height:1.4;">
+          佐藤みなみさん、18歳
+        </div>
+        <div style="font-size:14px;font-weight:500;line-height:1.6;color:rgba(255,255,255,.95);">
+          ・専門学校1年生・一人暮らし　・月3,000円グッズに使う推し活女子<br>
+          ・カバンにキーホルダーたくさん派　・水族館は年2〜3回行く
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-top:4px;border-top:1px solid rgba(255,255,255,.3);padding-top:4px;">🌸 ライフスタイルと趣味</div>
+        <div style="font-size:13px;font-weight:500;line-height:1.6;color:rgba(255,255,255,.95);">
+          ・行き場所：カフェ・アニメイト・映画館・ドン・キホーテ<br>
+          ・メディア：TikTok・Instagram・ハンドメイド系YouTube
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-top:4px;border-top:1px solid rgba(255,255,255,.3);padding-top:4px;">👫 人間関係とルーツ</div>
+        <div style="font-size:13px;font-weight:500;line-height:1.6;color:rgba(255,255,255,.95);">
+          ・友達：推し活仲間・専門学校の同期が中心<br>
+          ・子供の頃：動物好きで親に水族館へ連れて行ってもらっていた。小さい頃からぬいぐるみ集めが趣味
+        </div>
+        <div class="arrow-line" style="margin-top:8px;font-weight:700;opacity:1;">→ 具体的になると、設計できる</div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">26 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 27 : ペルソナ3つの問い
+========================================================= -->
+<section data-label="ペルソナ3つの問い">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title">ペルソナを作る <span class="accent">3つの問い</span></h2>
+    <div class="cards c3" style="flex:1;">
+      <div class="card green">
+        <div class="big-num">①</div>
+        <div class="ttl">この人は誰か？</div>
+        <div class="body">年齢・職業・どんな生活をしているか</div>
+      </div>
+      <div class="card green">
+        <div class="big-num">②</div>
+        <div class="ttl">なぜ買うのか？</div>
+        <div class="body">何が嬉しいから買う？<br>どんな気持ちで使う？</div>
+      </div>
+      <div class="card" style="border-color:var(--accent-warm);background:#fff6e6;border-width:3px;">
+        <div class="big-num" style="color:var(--accent-warm);">③ ★</div>
+        <div class="ttl">なぜ <u>買わない</u> のか？</div>
+        <div class="body" style="color:var(--text);font-weight:700;">ここが <span style="background:var(--accent);padding:0 4px;">一番大事</span></div>
+      </div>
+    </div>
+    <div class="note-box" style="margin-top:14px;font-size:22px;line-height:1.75;padding:16px 22px;">
+      <div><strong style="color:var(--eco-green);">「値段が高い」</strong> → 価格設計を見直す</div>
+      <div><strong style="color:var(--eco-green);">「置く場所がない」</strong> → バッグにつけられるようにする</div>
+      <div><strong style="color:var(--eco-green);">「使い道がない」</strong> → 機能をつける</div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">27 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 28 : ガブッと接続
+========================================================= -->
+<section data-label="ガブッと接続">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUAもやっていた！ <span class="accent">「買わない理由」を潰す</span></h2>
+    <div class="quote-box" style="font-style:normal;">
+      <strong style="color:var(--eco-green);">ガブッとシリーズ</strong> は<br>
+      「袋に入ったままでは魅力が伝わらない」という <strong>買わない理由</strong> を、<br>
+      手を入れると目が合う状態で陳列することで潰した。
+    </div>
+    <div class="center-stage" style="gap:12px;">
+      <div class="arrow" style="font-size:36px;">↓</div>
+      <div class="emphasis-box" style="text-align:center;">
+        この <strong>3つの問い</strong> で考えると、<br>ペルソナが具体的になります
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">28 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 29 : スタンレークイズ
+========================================================= -->
+<section data-label="スタンレー クイズ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 15分</div>
+  <div class="content compact has-badge">
+    <div class="section-head">WORK 01</div>
+    <h2 class="slide-title">みんなで考えよう / <span class="accent">スタンレータンブラーのペルソナ</span></h2>
+    <div class="twocol">
+      <div class="col">
+        <div style="flex:1;border-radius:10px;overflow:hidden;">
+          <img src="images/スタンレー.jpg" style="width:100%;max-height:380px;object-fit:contain;display:block;border-radius:10px;">
+        </div>
+      </div>
+      <div class="col gap-s">
+        <div class="highlight-box" style="font-size:20px;line-height:1.5;">
+          ダイソーに100円ボトルがある時代に、<br>なぜ <strong>5,000円のタンブラー</strong> を買う？
+        </div>
+        <div class="cards c3" style="gap:10px;margin-top:4px;">
+          <div class="card" style="padding:12px;"><div class="num">①</div><div class="body" style="font-size:14px;">誰か？</div></div>
+          <div class="card" style="padding:12px;"><div class="num">②</div><div class="body" style="font-size:14px;">なぜ買う？</div></div>
+          <div class="card" style="padding:12px;"><div class="num">③</div><div class="body" style="font-size:14px;">なぜ買わない？</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">29 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 30 : ペルソナ① 坂本ひなた
+========================================================= -->
+<section data-label="ペルソナ① 坂本ひなた">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:12px;">
+      <div style="background:var(--eco-green);color:#fff;border-radius:10px;padding:10px 20px;flex-shrink:0;text-align:center;">
+        <div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.05em;">ペルソナ①</div>
+        <div style="font-size:22px;font-weight:900;line-height:1.2;">坂本ひなた</div>
+        <div style="font-size:13px;opacity:.9;">22歳・大学4年生</div>
+      </div>
+      <div style="font-size:18px;color:var(--text-soft);line-height:1.7;padding-top:4px;">
+        関西私立大・環境学部。4月から食品メーカー就職予定。<br>
+        卒論テーマ：「プラスチック削減と消費行動」。就活を終えてひと安心の時期。
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;">
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">🏕️ 趣味・好きな時間</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>ソロキャン（道具選びに時間をかける）</li>
+          <li>古着屋めぐり（サステナ意識が高い）</li>
+          <li>Spotify プレイリスト作り</li>
+          <li>早起きしてコーヒーを丁寧に淹れる朝時間</li>
+        </ul>
+      </div>
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">📱 情報収集方法</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>Instagram 主軸（キャンプ系100+フォロー）</li>
+          <li>Pinterestでボードを丁寧に整理</li>
+          <li>Googleより先にInstagramで検索する習慣</li>
+          <li>キャンプ道具レビュー動画を流し見</li>
+        </ul>
+      </div>
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">👫 友達・人間関係</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>「エコ意識高め女子」グループ3〜4人</li>
+          <li>キャンプ好きの彼氏（社会人1年目）から道具の知識が入ってくる</li>
+          <li>「これどこで買った？」情報交換が日常的</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:10px;font-size:17px;line-height:1.7;">
+      🔍 <strong>スタンレーとの出会い：</strong>Instagramで「朝露に濡れたスタンレーの写真」を保存 → ブランドを調べ、「長く使える＝エコ」と卒論テーマと結びつけて自分を納得させ購入。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">30 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 31 : ペルソナ② 田中蒼
+========================================================= -->
+<section data-label="ペルソナ② 田中蒼">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:12px;">
+      <div style="background:var(--eco-green);color:#fff;border-radius:10px;padding:10px 20px;flex-shrink:0;text-align:center;">
+        <div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.05em;">ペルソナ②</div>
+        <div style="font-size:22px;font-weight:900;line-height:1.2;">田中蒼</div>
+        <div style="font-size:13px;opacity:.9;">19歳・大学1年生</div>
+      </div>
+      <div style="font-size:18px;color:var(--text-soft);line-height:1.7;padding-top:4px;">
+        東京国立大・工学部。新潟から上京して一人暮らし。カフェバイト週3回。<br>
+        「カッコいい大学生像」を模索している時期。節約しながらこだわりも持ちたい。
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;">
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">🏀 趣味・好きな時間</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>バスケ（大学サークル所属）</li>
+          <li>ストリート系ファッション・スニーカー収集</li>
+          <li>TikTok・YouTube Shorts 無限スクロール</li>
+          <li>夜中に飲み物を飲みながらYouTube（←タンブラー需要に直結）</li>
+        </ul>
+      </div>
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">📱 情報収集方法</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>TikTokが入口（おすすめに流れたものをそのまま信じがち）</li>
+          <li>Xで「コスパ最強」「大学生 持ち物」を検索</li>
+          <li>Amazonのレビュー（★4以上・100件以上が購入の基準）</li>
+          <li>先輩・友達の持ち物を目で見てから調べる</li>
+        </ul>
+      </div>
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">👫 友達・人間関係</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>バスケ先輩（3年）：ギア知識が豊富なアウトドア好き</li>
+          <li>地元の幼馴染とLINEで「最近何買った？」報告し合う</li>
+          <li>Xでフォローしているガジェット・雑貨好き大学生</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:10px;font-size:17px;line-height:1.7;">
+      🔍 <strong>スタンレーとの出会い：</strong>TikTok「鞄の中身」系動画でフォロワー数万のアカウントが絶賛 → X・Amazon確認 → 「あ、先輩が持ってるやつだ」と気づいて購入決意。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">31 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 32 : ペルソナ③ 森川りこ
+========================================================= -->
+<section data-label="ペルソナ③ 森川りこ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <div style="display:flex;align-items:flex-start;gap:20px;margin-bottom:12px;">
+      <div style="background:var(--eco-green);color:#fff;border-radius:10px;padding:10px 20px;flex-shrink:0;text-align:center;">
+        <div style="font-size:12px;font-weight:700;opacity:.85;letter-spacing:.05em;">ペルソナ③</div>
+        <div style="font-size:22px;font-weight:900;line-height:1.2;">森川りこ</div>
+        <div style="font-size:13px;opacity:.9;">21歳・大学3年生</div>
+      </div>
+      <div style="font-size:18px;color:var(--text-soft);line-height:1.7;padding-top:4px;">
+        愛知私立大・心理学部。実家暮らし。アパレルバイト週3回。<br>
+        インフルエンサーというより「等身大のかわいいが好き」なタイプ。
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;">
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">☕ 趣味・好きな時間</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>カフェ巡り（ドリンクの写真を撮るのが好き）</li>
+          <li>セルフネイルで凝ったデザインに挑戦</li>
+          <li>K-POPグッズ集め・ライブ参戦</li>
+          <li>Netflixで韓ドラ・ネイルしながらTikTok無限スクロール</li>
+        </ul>
+      </div>
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">📱 情報収集方法</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>TikTokで流れてきたものを自然に「いいな」と感じる</li>
+          <li>Instagram：芸能人・タレントの公式（辻希美など等身大系）</li>
+          <li>友達LINEで「これ見て！」と共有されたリンクを一緒に調べる</li>
+        </ul>
+      </div>
+      <div class="card green" style="padding:12px 14px;gap:6px;">
+        <div style="font-size:17px;font-weight:700;color:var(--eco-green);">👫 友達・人間関係</div>
+        <ul style="font-size:16px;margin:0;padding-left:18px;color:var(--text-soft);line-height:1.75;">
+          <li>高校からの仲良し3人グループが中心（大学は別々）</li>
+          <li>グループLINEで「これかわいくない？」とリンクを送り合う日常</li>
+          <li>バイト先の先輩（23歳）の持ち物がいつも気になる</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:10px;font-size:17px;line-height:1.7;">
+      🔍 <strong>スタンレーとの出会い：</strong>辻希美のInstagramストーリーに自然に映り込み → TikTokで色違いを並べた動画を発見 →「このピンクベージュ、絶対かわいい」と即決。機能の説明はほぼ読まず、色で買う。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">32 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 33 : ペルソナ比較まとめ
+========================================================= -->
+<section data-label="ペルソナ比較まとめ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <h2 class="slide-title" style="font-size:30px;margin-bottom:14px;">3人の <span class="accent">購入パターン比較</span></h2>
+    <table class="timeline-table" style="font-size:20px;flex:1;">
+      <thead>
+        <tr>
+          <th class="tcol" style="padding:10px 16px;font-size:19px;width:120px;">項目</th>
+          <th style="padding:10px 16px;font-size:19px;">👩‍🎓 ひなた（22）</th>
+          <th style="padding:10px 16px;font-size:19px;">🧑‍🎓 蒼（19）</th>
+          <th style="padding:10px 16px;font-size:19px;">💁 りこ（21）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tcol" style="padding:10px 16px;font-size:18px;">購入動機</td>
+          <td style="padding:10px 16px;font-size:18px;">サステナブル × キャンプ</td>
+          <td style="padding:10px 16px;font-size:18px;">コスパ × 先輩の影響</td>
+          <td style="padding:10px 16px;font-size:18px;">かわいい色 × タレントの影響</td>
+        </tr>
+        <tr>
+          <td class="tcol" style="padding:10px 16px;font-size:18px;">情報源</td>
+          <td style="padding:10px 16px;font-size:18px;">Instagram・Pinterest</td>
+          <td style="padding:10px 16px;font-size:18px;">TikTok・X・Amazon</td>
+          <td style="padding:10px 16px;font-size:18px;">TikTok・芸能人インスタ</td>
+        </tr>
+        <tr>
+          <td class="tcol" style="padding:10px 16px;font-size:18px;">決め手</td>
+          <td style="padding:10px 16px;font-size:18px;">「長く使える」納得感</td>
+          <td style="padding:10px 16px;font-size:18px;">レビューと口コミの一致</td>
+          <td style="padding:10px 16px;font-size:18px;">色・デザインの一目惚れ</td>
+        </tr>
+        <tr>
+          <td class="tcol" style="padding:10px 16px;font-size:18px;">使う場面</td>
+          <td style="padding:10px 16px;font-size:18px;">キャンプ・カフェ</td>
+          <td style="padding:10px 16px;font-size:18px;">夜の部屋・練習後</td>
+          <td style="padding:10px 16px;font-size:18px;">カフェ・休日の家時間</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note-box" style="margin-top:10px;text-align:center;font-size:19px;">
+      同じ商品でも <strong>買う理由・きっかけ・場面</strong> はそれぞれ違う → だから <strong>ペルソナ</strong> が大事
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">33 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 31 : ワーク② 自分で選ぼう
+========================================================= -->
+<section data-label="ワーク② 自分で選ぼう">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 15分</div>
+  <div class="content compact has-badge">
+    <div class="section-head">WORK 02</div>
+    <h2 class="slide-title">ワーク② <span class="accent">自分でひとつ選ぼう</span></h2>
+    <div class="cards c4" style="flex:1;">
+      <div class="card green">
+        <div class="num">①</div>
+        <div class="ttl" style="font-size:18px;">3COINSプレミアム</div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;margin:4px 0;">
+          <img src="images/3coins.jpg" style="width:100%;height:110px;object-fit:contain;display:block;">
+        </div>
+        <div class="body" style="font-size:12px;">プロジェクター・サウンドバー・タブレットなど<br>高価格帯の家電ガジェットライン</div>
+      </div>
+      <div class="card green">
+        <div class="num">②</div>
+        <div class="ttl" style="font-size:18px;">Fjällräven<br><span style="font-size:13px;font-weight:500;">カンケンリュック</span></div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;margin:4px 0;">
+          <img src="images/カンケンリュック.jpg" style="width:100%;height:110px;object-fit:contain;display:block;">
+        </div>
+        <div class="body" style="font-size:13px;">シンプルで丈夫<br>Z世代でリバイバル中</div>
+      </div>
+      <div class="card green">
+        <div class="num">③</div>
+        <div class="ttl" style="font-size:18px;">Casetify</div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;margin:4px 0;">
+          <img src="images/casetify.jpg" style="width:100%;height:110px;object-fit:contain;display:block;">
+        </div>
+        <div class="body" style="font-size:13px;">3,000〜6,000円のスマホケース<br>コラボ・SNSで話題</div>
+      </div>
+      <div class="card green">
+        <div class="num">④</div>
+        <div class="ttl" style="font-size:18px;">キーリングコスメ</div>
+        <div style="border-radius:8px;overflow:hidden;background:#f0f9f1;margin:4px 0;">
+          <img src="images/キーリングコスメ.png" style="width:100%;height:110px;object-fit:contain;display:block;">
+        </div>
+        <div class="body" style="font-size:13px;">韓国発<br>バッグにぶら下げミニコスメ</div>
+      </div>
+    </div>
+    <div class="note-box" style="text-align:center;margin-top:10px;">
+      他の商品でもOK！ <strong>3つの問い</strong> で答えてみよう
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">34 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 32 : ペアシェア①
+========================================================= -->
+<section data-label="ペアシェア①">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 9分</div>
+  <div class="content has-badge">
+    <h2 class="slide-title">ペアで話そう</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="body">選んだ商品は <strong>何か</strong></div></div>
+      <div class="step"><div class="n">2</div><div class="body">描いたペルソナは <strong>どんな人か</strong></div></div>
+      <div class="step"><div class="n">3</div><div class="body">その人が <strong>買う理由</strong> と、<strong>買わない理由</strong></div></div>
+    </div>
+    <div class="highlight-box" style="margin-top:auto;">
+      💬 正直な感想でOK：「その人確かにいそう」「なんで欲しいかわからない」
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">35 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 33 : ワーク③ 自分のぬいぐるみ
+========================================================= -->
+<section data-label="ワーク③ 自分のぬいぐるみ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">⏱ 15分</div>
+  <div class="content compact has-badge">
+    <div class="section-head">WORK 03</div>
+    <h2 class="slide-title">ワーク③ 自分のぬいぐるみで <span class="accent">ペルソナを作る</span></h2>
+    <div class="emphasis-box" style="text-align:center;font-size:24px;">
+      🎯 AQUAのターゲット ＝ <strong>高校生・専門学生・大学生</strong><br>
+      <span style="font-size:18px;font-weight:500;opacity:.9;">（ここから外れないこと）</span>
+    </div>
+    <div class="cards c4" style="margin-top:12px;flex:1;">
+      <div class="card green"><div class="num">①</div><div class="ttl" style="font-size:18px;">誰か？</div><div class="body" style="font-size:14px;">この商品を買う人は？<br>（具体的に）</div></div>
+      <div class="card green"><div class="num">②</div><div class="ttl" style="font-size:18px;">なぜ買う？</div><div class="body" style="font-size:14px;">動機を書き出す</div></div>
+      <div class="card" style="border-color:var(--accent-warm);background:#fff6e6;border-width:3px;">
+        <div class="num" style="color:var(--accent-warm);">③</div><div class="ttl" style="font-size:18px;">なぜ買わない？</div><div class="body" style="font-size:14px;">障害を書き出す</div></div>
+      <div class="card" style="border-color:var(--accent);background:#fffef0;border-width:3px;">
+        <div class="num" style="color:#c19900;">④ ★</div><div class="ttl" style="font-size:18px;">どこ・どんな場面で手に入れる？</div><div class="body" style="font-size:14px;">購入体験まで具体に</div></div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">36 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 34 : 全体シェア② ペルソナ発表
+========================================================= -->
+<section data-label="全体シェア② ペルソナ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge red">⏱ 1分30秒</div>
+  <div class="content has-badge">
+    <h2 class="slide-title">全体シェア / <span class="accent">ペルソナを紹介してください</span></h2>
+    <div class="cards c3" style="flex:1;">
+      <div class="card green-fill"><div class="big-num" style="color:#fff;opacity:.9;">①</div><div class="ttl">アイデアを一言で</div><div class="body" style="color:rgba(255,255,255,.85);font-size:16px;">選んだぬいぐるみ</div></div>
+      <div class="card green-fill"><div class="big-num" style="color:#fff;opacity:.9;">②</div><div class="ttl">ペルソナはどんな人</div><div class="body" style="color:rgba(255,255,255,.85);font-size:16px;">名前・年齢・生活</div></div>
+      <div class="card green-fill"><div class="big-num" style="color:#fff;opacity:.9;">③</div><div class="ttl">買う理由を1文</div><div class="body" style="color:rgba(255,255,255,.85);font-size:16px;">なぜ欲しがる？</div></div>
+    </div>
+    <div class="mute" style="text-align:center;font-size:18px;">
+      完成していなくてもOK。時間短いので簡潔に！
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">37 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 35 : 今日のまとめ
+========================================================= -->
+<section data-label="今日のまとめ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">今日の <span class="accent">まとめ</span></h2>
+    <div class="twocol" style="flex:1;">
+      <div class="card green" style="padding:24px;">
+        <div class="num" style="font-size:22px;">SESSION 01</div>
+        <div class="ttl">1コマ目</div>
+        <div class="body" style="font-size:18px;color:var(--text);line-height:1.7;">
+          <strong>かわいいだけ</strong> ではヒットしない。<br><br>
+          「かわいい ＋ <span style="background:var(--accent);padding:0 6px;">もう1つの価値</span>」の<br>
+          ラベルが言えると、<strong>商品の説明ができる</strong>ようになる。
+        </div>
+      </div>
+      <div class="card green" style="padding:24px;">
+        <div class="num" style="font-size:22px;">SESSION 02</div>
+        <div class="ttl">2コマ目</div>
+        <div class="body" style="font-size:18px;color:var(--text);line-height:1.7;">
+          <strong>誰に届けるか</strong> を具体的にする。<br><br>
+          ペルソナがはっきりするほど、<strong>商品設計がブレない</strong>。<br>
+          <span style="background:var(--accent);padding:0 6px;">「買わない理由」</span> が商品を磨くヒントになる。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">38 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 36 : 宿題
+========================================================= -->
+<section data-label="宿題">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">📌 <span class="accent">宿題</span></h2>
+    <div class="hw-card">
+      <div class="emoji">📷</div>
+      <div class="ttl">街中やSNSで気になった<br>ぬいぐるみの写真を <span style="color:var(--eco-green);">5つ</span> 集めてくる</div>
+      <div class="sub">スクショでも、お店で撮った写真でも 何でもOK</div>
+    </div>
+    <div class="twocol" style="margin-top:14px;">
+      <div class="note-box" style="text-align:center;">
+        📅 次回：<strong>5月21日（水）</strong>
+      </div>
+      <div class="note-box" style="text-align:center;background:var(--accent);border-color:#e6cf00;">
+        🎯 テーマ：<strong>差別化・3C分析</strong>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">39 / 40</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 37 : 今後のスケジュール
+========================================================= -->
+<section data-label="今後のスケジュール">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">今後の <span class="accent">スケジュール</span></h2>
+    <table class="schedule" style="margin-top:8px;">
+      <thead>
+        <tr><th>日程</th><th>テーマ</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="date">5/21</td>
+          <td class="theme">差別化・3C分析</td>
+          <td>競合比較ワーク・1〜2案に絞り始める</td>
+        </tr>
+        <tr>
+          <td class="date">6/4</td>
+          <td class="theme">コスト・価格設計</td>
+          <td>コンセプトシート完成・最終案を絞る</td>
+        </tr>
+        <tr>
+          <td class="date">6/10</td>
+          <td class="theme">中間プレゼン</td>
+          <td>プレゼン本番</td>
+        </tr>
+        <tr style="background:var(--eco-green-soft);">
+          <td class="date">9/9</td>
+          <td class="theme">🏆 最終コンテスト</td>
+          <td>本番（東京校）</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="emphasis-box" style="margin-top:auto;text-align:center;">
+      一緒に、商品化を目指しましょう 🐧
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">40 / 40</span>
+  </div>
+</section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+</body>
+</html>
