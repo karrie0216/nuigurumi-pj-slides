@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>差別化・3C分析 — 福岡ECO × AQUA 第3回</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --eco-green:#2DB84B;
+    --eco-green-dark:#1f9a3b;
+    --eco-green-soft:#e8f6ec;
+    --white:#FFFFFF;
+    --bg:#F5F5F5;
+    --text:#1A1A1A;
+    --text-soft:#555;
+    --text-mute:#888;
+    --accent:#FFE600;
+    --accent-warm:#FFB347;
+    --border:#2DB84B;
+    --card-shadow:0 2px 8px rgba(0,0,0,.06);
+    --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#111;font-family:var(--font);color:var(--text);}
+  deck-stage > section{
+    background:var(--bg);
+    font-family:var(--font);
+    color:var(--text);
+    overflow:hidden;
+    font-size:28px;
+    line-height:1.6;
+  }
+
+  /* ——— Frame (header bar + logo + footer) ——— */
+  .frame-bar{position:absolute;left:0;right:0;top:0;height:8px;background:var(--eco-green);}
+  .frame-logo{position:absolute;top:20px;right:32px;color:var(--eco-green);font-weight:700;font-size:16px;letter-spacing:.02em;}
+  .frame-footer{
+    position:absolute;left:32px;right:32px;bottom:20px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:14px;color:var(--text-mute);
+  }
+  .frame-footer .left{font-weight:400;}
+  .frame-footer .right{font-weight:500;font-variant-numeric:tabular-nums;color:#666;}
+
+  /* ——— Content card ——— */
+  .content{
+    position:absolute;left:48px;right:48px;top:48px;bottom:60px;
+    background:var(--white);border-radius:12px;border-left:4px solid var(--eco-green);
+    box-shadow:var(--card-shadow);padding:44px 56px 40px;
+    display:flex;flex-direction:column;
+  }
+  .content.compact{padding:36px 48px 32px;}
+  .slide-title{font-size:36px;font-weight:700;margin:0 0 20px 0;line-height:1.3;letter-spacing:.01em;}
+  .slide-title .accent{background:linear-gradient(transparent 62%, var(--accent) 62% 92%, transparent 92%);padding:0 .15em;}
+  .slide-sub{font-size:26px;color:var(--text-soft);margin:-12px 0 20px 0;font-weight:500;}
+
+  /* ——— Cover ——— */
+  .cover{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(1200px 600px at 85% 110%, rgba(45,184,75,.12), transparent 60%),
+      radial-gradient(900px 500px at 10% -10%, rgba(255,230,0,.18), transparent 60%),
+      var(--white);
+    display:flex;flex-direction:column;justify-content:center;padding:80px 96px;
+  }
+  .cover .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    color:var(--eco-green);font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;
+    margin-bottom:28px;
+  }
+  .cover .eyebrow::before{content:"";width:32px;height:3px;background:var(--eco-green);border-radius:2px;}
+  .cover h1{font-size:60px;font-weight:900;line-height:1.2;margin:0 0 18px 0;letter-spacing:.01em;}
+  .cover h1 .hl{background:linear-gradient(transparent 60%, var(--accent) 60% 92%, transparent 92%);padding:0 .12em;}
+  .cover .subtitle{font-size:24px;font-weight:500;color:var(--text-soft);line-height:1.55;margin:0 0 36px 0;max-width:900px;}
+  .cover .meta{display:flex;gap:40px;font-size:18px;color:var(--text-soft);font-weight:500;}
+  .cover .meta strong{color:var(--text);font-weight:700;}
+  .cover .proj-badge{
+    position:absolute;right:48px;bottom:48px;
+    background:var(--eco-green);color:#fff;font-weight:700;font-size:15px;
+    padding:12px 20px;border-radius:999px;letter-spacing:.02em;
+    box-shadow:0 4px 14px rgba(45,184,75,.35);
+  }
+  .cover .logo-block{position:absolute;top:48px;right:48px;text-align:right;font-size:14px;color:var(--text-soft);line-height:1.5;}
+  .cover .logo-block .nm{color:var(--eco-green);font-weight:700;font-size:16px;}
+
+  /* ——— Common elements ——— */
+  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--eco-green);color:#fff;font-weight:700;font-size:18px;padding:6px 14px;border-radius:999px;}
+  .time-badge{
+    position:absolute;top:56px;left:64px;
+    background:var(--eco-green);color:#fff;font-weight:700;font-size:24px;
+    padding:10px 20px;border-radius:999px;letter-spacing:.03em;
+    box-shadow:0 3px 10px rgba(45,184,75,.3);z-index:5;
+  }
+  .content.has-badge{padding-left:200px;}
+  .content.has-badge.compact{padding-left:190px;}
+  .time-badge.red{background:#e53935;box-shadow:0 3px 10px rgba(229,57,53,.3);}
+  .emphasis-box{background:var(--eco-green);color:#fff;padding:22px 28px;border-radius:12px;font-weight:700;font-size:28px;line-height:1.5;}
+  .highlight-box{background:var(--accent);color:var(--text);padding:18px 24px;border-radius:10px;font-weight:700;font-size:26px;line-height:1.55;}
+  .note-box{background:var(--eco-green-soft);border-left:4px solid var(--eco-green);padding:18px 24px;border-radius:8px;font-size:26px;line-height:1.55;}
+  .quote-box{
+    background:#fafafa;border-left:4px solid var(--accent-warm);
+    padding:22px 28px;border-radius:10px;font-size:26px;line-height:1.6;color:#333;position:relative;
+  }
+  .quote-box .attr{display:block;margin-top:10px;font-size:20px;color:var(--text-mute);text-align:right;}
+
+  /* ——— Image placeholder ——— */
+  .img-placeholder{
+    background:#E8E8E8;border:2px dashed #AAAAAA;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    color:#666;font-size:18px;font-weight:500;text-align:center;padding:20px;
+    min-height:200px;width:100%;
+  }
+  .img-placeholder span{display:block;}
+
+  /* ——— Tables / timelines ——— */
+  .timeline-table{
+    width:100%;border-collapse:separate;border-spacing:0;font-size:22px;
+    background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);
+  }
+  .timeline-table th{background:var(--eco-green);color:#fff;font-weight:700;padding:10px 18px;text-align:left;font-size:22px;}
+  .timeline-table td{padding:10px 18px;border-bottom:1px solid #eee;}
+  .timeline-table tr:last-child td{border-bottom:none;}
+  .timeline-table .tcol{width:200px;font-weight:700;color:var(--eco-green);font-variant-numeric:tabular-nums;}
+  .timeline-table tr.wk td{background:#fffbea;}
+
+  /* ——— Grid card layouts ——— */
+  .cards{display:grid;gap:20px;}
+  .cards.c3{grid-template-columns:repeat(3,1fr);}
+  .cards.c4{grid-template-columns:repeat(4,1fr);}
+  .cards.c2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    background:#fff;border:1.5px solid #e5e5e5;border-radius:12px;padding:22px 22px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .card.green{border-color:var(--eco-green);background:var(--eco-green-soft);}
+  .card.green-fill{border-color:var(--eco-green);background:var(--eco-green);color:#fff;}
+  .card.yellow{border-color:#e6cf00;background:#fffbcc;}
+  .card .num{font-size:22px;font-weight:900;color:var(--eco-green);}
+  .card .big-num{font-size:44px;font-weight:900;color:var(--eco-green);line-height:1;margin-bottom:4px;}
+  .card .label{font-size:22px;color:var(--text-soft);font-weight:500;}
+  .card .ttl{font-size:26px;font-weight:700;line-height:1.3;}
+  .card .body{font-size:22px;color:var(--text-soft);line-height:1.55;}
+
+  /* ——— Bullet list ——— */
+  .bul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .bul li{position:relative;padding-left:28px;font-size:26px;line-height:1.55;}
+  .bul li::before{content:"";position:absolute;left:4px;top:14px;width:10px;height:10px;background:var(--eco-green);border-radius:50%;}
+  .bul.sm li{font-size:22px;}
+  .bul li strong{font-weight:700;}
+  .bul li .pin{color:var(--eco-green);font-weight:700;}
+
+  /* ——— Two-column ——— */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:32px;flex:1;align-items:stretch;}
+  .twocol.narrow{gap:24px;}
+
+  /* ——— Section divider slide ——— */
+  .section-slide{
+    position:absolute;inset:0;background:var(--eco-green);color:#fff;
+    display:flex;flex-direction:column;justify-content:center;padding:0 120px;
+  }
+  .section-slide .tag{font-size:20px;font-weight:700;letter-spacing:.3em;opacity:.85;margin-bottom:24px;}
+  .section-slide h2{font-size:108px;font-weight:900;margin:0 0 24px 0;line-height:1;letter-spacing:.02em;}
+  .section-slide .desc{font-size:32px;font-weight:500;line-height:1.5;max-width:1000px;opacity:.95;}
+  .section-slide::before{
+    content:"";position:absolute;right:-200px;bottom:-200px;width:700px;height:700px;
+    border-radius:50%;background:rgba(255,255,255,.08);
+  }
+  .section-slide::after{
+    content:"";position:absolute;left:-100px;top:-100px;width:340px;height:340px;
+    border-radius:50%;background:rgba(255,230,0,.18);
+  }
+
+  /* ——— Step list ——— */
+  .steps{display:flex;flex-direction:column;gap:14px;}
+  .step{display:flex;gap:18px;align-items:flex-start;background:#fafafa;border-radius:10px;padding:14px 18px;}
+  .step .n{
+    flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--eco-green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;
+  }
+  .step .body{font-size:26px;line-height:1.5;padding-top:4px;}
+  .step .body strong{font-weight:700;}
+
+  /* ——— Arrow ——— */
+  .arrow{color:var(--eco-green);font-weight:900;font-size:22px;}
+
+  /* QnA style */
+  .big-q{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;}
+  .big-q .qmark{font-size:180px;font-weight:900;color:var(--eco-green);line-height:1;text-shadow:6px 6px 0 rgba(45,184,75,.15);}
+  .big-q .text{font-size:32px;font-weight:700;max-width:900px;line-height:1.5;}
+  .big-q .text .accent{background:linear-gradient(transparent 62%, var(--accent) 62% 92%, transparent 92%);padding:0 .15em;}
+
+  /* Center-big statement */
+  .center-stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:24px;text-align:center;}
+  .big-statement{font-size:44px;font-weight:900;line-height:1.4;max-width:1000px;}
+  .big-statement .hl{background:linear-gradient(transparent 62%, var(--accent) 62% 92%, transparent 92%);padding:0 .1em;}
+
+  /* 3C diagram (3つの輪) */
+  .threec-diagram{
+    flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:380px;
+  }
+  .threec-diagram .circle{
+    position:absolute;width:260px;height:260px;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fff;font-weight:900;text-align:center;line-height:1.3;
+    box-shadow:0 4px 16px rgba(0,0,0,.12);
+  }
+  .threec-diagram .circle .ja{font-size:30px;font-weight:900;}
+  .threec-diagram .circle .en{font-size:18px;font-weight:700;opacity:.85;letter-spacing:.08em;margin-top:4px;}
+  .threec-diagram .c-cust{background:rgba(45,184,75,.85);left:calc(50% - 220px);top:calc(50% - 180px);}
+  .threec-diagram .c-comp{background:rgba(255,179,71,.85);left:calc(50% - 40px);top:calc(50% - 180px);}
+  .threec-diagram .c-comy{background:rgba(45,184,75,.55);left:calc(50% - 130px);top:calc(50% - 30px);}
+
+  /* Schedule table */
+  .schedule{width:100%;border-collapse:separate;border-spacing:0;font-size:24px;background:#fff;border-radius:10px;overflow:hidden;}
+  .schedule th{background:var(--accent-warm);color:#fff;padding:14px 18px;text-align:left;font-size:24px;}
+  .schedule td{padding:14px 18px;border-bottom:1px solid #eee;vertical-align:top;}
+  .schedule tr:last-child td{border-bottom:none;}
+  .schedule .date{font-weight:900;color:var(--eco-green);width:140px;white-space:nowrap;}
+  .schedule .theme{font-weight:700;width:260px;}
+
+  /* Subhead badge */
+  .section-head{
+    background:var(--accent-warm);color:#fff;font-weight:900;font-size:24px;
+    padding:8px 18px;border-radius:6px;display:inline-block;margin-bottom:12px;
+  }
+
+  /* Submission card grid */
+  .submit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .submit-row{
+    background:#fff;border:1.5px solid var(--eco-green);border-radius:10px;padding:14px 18px;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .submit-row .num{
+    flex-shrink:0;width:36px;height:36px;border-radius:8px;background:var(--eco-green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;
+  }
+  .submit-row .body{font-size:22px;line-height:1.45;}
+  .submit-row .body strong{font-weight:700;}
+
+  /* compact layout */
+  .flex1{flex:1;}
+  .mt-a{margin-top:auto;}
+  .mb-a{margin-bottom:auto;}
+  .gap-s{gap:12px;}
+  .gap-m{gap:20px;}
+  .gap-l{gap:28px;}
+  .col{display:flex;flex-direction:column;}
+  .row{display:flex;}
+  .center-h{justify-content:center;}
+  .center-v{align-items:center;}
+  .bold{font-weight:700;}
+  .mute{color:var(--text-soft);}
+
+  @media print{ body{background:#fff;} }
+</style>
+</head>
+<body>
+
+<deck-stage width="1280" height="720">
+
+<!-- =========================================================
+     SLIDE 1 : COVER
+========================================================= -->
+<section data-label="表紙">
+  <div class="cover">
+    <div class="logo-block">
+      <div class="nm">福岡ECO動物海洋専門学校</div>
+      <div>株式会社AQUA 企業プロジェクト</div>
+    </div>
+    <div class="eyebrow">FUKUOKA ECO × AQUA / 第3回講義</div>
+    <h1>差別化 × <span class="hl">3C分析</span></h1>
+    <div class="subtitle">
+      あなたの案を、企画に育てる90分。<br>
+      「強い案」を作るための3つの視点を持ち帰る。
+    </div>
+    <div class="meta">
+      <div><strong>日付</strong> ／ 2026年5月21日（木）</div>
+      <div><strong>主催</strong> ／ 株式会社ATARAYO</div>
+      <div><strong>講師</strong> ／ 橋本（オンライン）／ 赤岩（教室）</div>
+    </div>
+    <div class="proj-badge">株式会社AQUA × 福岡ECO 企業プロジェクト</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 2 : 今日の90分タイムライン
+========================================================= -->
+<section data-label="タイムライン">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content compact">
+    <div class="section-head" style="margin-bottom:10px;">今日の90分</div>
+    <h2 class="slide-title" style="font-size:32px;margin-bottom:14px;">タイムライン ─ <span class="accent">3C分析で案を強くする</span></h2>
+    <table class="timeline-table" style="font-size:20px;">
+      <thead><tr><th class="tcol" style="padding:8px 16px;font-size:20px;">時間</th><th style="padding:8px 16px;">内容</th></tr></thead>
+      <tbody>
+        <tr><td class="tcol" style="padding:8px 16px;">0〜5分</td><td style="padding:8px 16px;">オープニング・今日のゴール</td></tr>
+        <tr><td class="tcol" style="padding:8px 16px;">5〜7分</td><td style="padding:8px 16px;">前回の強い案（定期入れ）を再掲</td></tr>
+        <tr><td class="tcol" style="padding:8px 16px;">7〜12分</td><td style="padding:8px 16px;">3C分析の紹介</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:8px 16px;">12〜20分</td><td style="padding:8px 16px;">Customer（誰が・なぜ買う・なぜ買わない）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:8px 16px;">20〜43分</td><td style="padding:8px 16px;">Competitor（観察3観点＋スマホ5分＋シェア）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:8px 16px;">43〜58分</td><td style="padding:8px 16px;">Company（武器①②＋Menti）</td></tr>
+        <tr class="wk"><td class="tcol" style="padding:8px 16px;">58〜73分</td><td style="padding:8px 16px;">個人ワーク（提出フォーマットを書く）</td></tr>
+        <tr><td class="tcol" style="padding:8px 16px;">73〜80分</td><td style="padding:8px 16px;">発表（1人1分 × 7名）</td></tr>
+        <tr><td class="tcol" style="padding:8px 16px;">80〜90分</td><td style="padding:8px 16px;">宿題・次回までの動き方</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">2 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 3 : AQUAコンペ条件 振り返り①
+========================================================= -->
+<section data-label="AQUA振り返り①">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUAコンペ条件 <span class="accent">振り返り①</span> ─ テーマ</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="img-placeholder" style="flex:1;">
+          <span>※ AQUAオリエン資料 P.◯<br>「テーマ」セクションのスクショ画像をここに配置</span>
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li>テーマは <strong>ペンギンをモチーフ</strong> にしたぬいぐるみ素材商品</li>
+          <li>形態は <strong>水族館案・動物園案の両方</strong> を提案可能な商品</li>
+          <li>ぬいぐるみ素材を使う（全身ぬいぐるみに縛らない）</li>
+        </ul>
+        <div class="note-box mt-a">
+          <strong>「条件を満たした上で、独自性を出す」</strong><br>
+          <span style="font-size:22px;color:var(--text-soft);">条件を外した瞬間に、評価の土俵から外れます。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">3 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 4 : AQUAコンペ条件 振り返り②
+========================================================= -->
+<section data-label="AQUA振り返り②">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUAコンペ条件 <span class="accent">振り返り②</span> ─ ターゲット</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="img-placeholder" style="flex:1;">
+          <span>※ AQUAオリエン資料 P.◯<br>「ターゲット」セクションのスクショ画像をここに配置</span>
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li><strong>高校生・専門学生・大学生</strong></li>
+          <li>シーンは <strong>友人・恋人・家族</strong> と来館したとき</li>
+          <li>つまり、あなたたち自身が一番のターゲット層</li>
+        </ul>
+        <div class="note-box mt-a">
+          <strong>「同世代の本音」がいちばんの武器。</strong><br>
+          <span style="font-size:22px;color:var(--text-soft);">大人が想像で作る企画より、当事者の声が強い。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">4 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 5 : AQUAコンペ条件 振り返り③
+========================================================= -->
+<section data-label="AQUA振り返り③">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">AQUAコンペ条件 <span class="accent">振り返り③</span> ─ 評価ポイント</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="img-placeholder" style="flex:1;">
+          <span>※ AQUAオリエン資料 P.◯<br>「評価ポイント／流れ」セクションのスクショ画像をここに配置</span>
+        </div>
+      </div>
+      <div class="col gap-m">
+        <ul class="bul">
+          <li><strong>AIで画像を並べるだけは不可</strong></li>
+          <li><strong>現地観察</strong> と <strong>同世代の生の声</strong> が必須</li>
+          <li>最優秀賞は <strong>商品化＋有償インターン</strong></li>
+        </ul>
+        <div class="note-box mt-a">
+          <strong>「リサーチした人が勝つ」コンペ。</strong><br>
+          <span style="font-size:22px;color:var(--text-soft);">アイデアの量より、根拠の質で差がつきます。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">5 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 6 : 前回の強い案（定期入れ）再掲
+========================================================= -->
+<section data-label="前回の強い案">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head">前回（4/23）の振り返り</div>
+    <h2 class="slide-title">「強い案」だった <span class="accent">定期入れ</span> を覚えていますか？</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="img-placeholder" style="flex:1;">
+          <span>※ 「定期入れ写真」<br>（前回授業で共有した画像）</span>
+        </div>
+      </div>
+      <div class="col gap-m">
+        <div class="note-box">
+          <strong>なぜ「強い案」だったのか？</strong>
+        </div>
+        <ul class="bul">
+          <li>使うシーン（通学）が <strong>具体的</strong> に見える</li>
+          <li>ぬいぐるみ素材を活かす理由が <strong>明確</strong></li>
+          <li>同世代の生活に <strong>無理なく溶け込む</strong></li>
+        </ul>
+        <div class="highlight-box mt-a">
+          今日のゴールは、「この水準の案」をもう1つ作ること。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">6 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 7 : 今日のゴール
+========================================================= -->
+<section data-label="今日のゴール">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">今日のゴール</h2>
+    <div class="center-stage">
+      <div class="big-statement">
+        90分の終わりに、<br>
+        <span class="hl">「形になった案」を1つ</span> 手元に持つ。
+      </div>
+      <div class="emphasis-box" style="margin-top:20px;">
+        5/25（月）12:00 までに Teams に1案を投稿する
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">7 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 8 : 3C分析とは（紹介）
+========================================================= -->
+<section data-label="3Cとは">
+  <div class="section-slide">
+    <div class="tag">SECTION 1 / 3C ANALYSIS</div>
+    <h2>3C分析</h2>
+    <div class="desc">
+      アイデアを「企画」に育てるための3つの視点。<br>
+      Customer ／ Competitor ／ Company。
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 9 : 3Cの3つの輪（図解）
+========================================================= -->
+<section data-label="3Cの3つ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">3つの視点で <span class="accent">案を強くする</span></h2>
+    <div class="cards c3" style="flex:1;align-items:stretch;">
+      <div class="card green">
+        <div class="num">① CUSTOMER</div>
+        <div class="ttl">お客さま</div>
+        <div class="body">誰が、なぜ買うのか？<br>なぜ買わないのか？</div>
+      </div>
+      <div class="card yellow">
+        <div class="num" style="color:#b39400;">② COMPETITOR</div>
+        <div class="ttl">他社</div>
+        <div class="body">他社にないあなたの強みは？<br>同じテーマで何が出ている？</div>
+      </div>
+      <div class="card green-fill">
+        <div class="num" style="color:#fff;">③ COMPANY</div>
+        <div class="ttl">自社（自分）</div>
+        <div class="body">自分の武器は？<br>提案できる立ち位置は？</div>
+      </div>
+    </div>
+    <div class="note-box" style="margin-top:18px;">
+      <strong>3つが重なったところ</strong> に、強い企画が生まれる。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">8 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 10 : Customer 問い
+========================================================= -->
+<section data-label="Customer 問い">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">0:12 - 0:20</div>
+  <div class="content has-badge">
+    <div class="section-head" style="background:var(--eco-green);">CUSTOMER</div>
+    <div class="big-q">
+      <div class="qmark">?</div>
+      <div class="text">
+        あなたの案を、<br>
+        <span class="accent">「誰が」「なぜ」</span> 買いますか？<br>
+        そして、なぜ <span class="accent">買わない</span> のでしょう？
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">9 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 11 : Customer 答え
+========================================================= -->
+<section data-label="Customer 答え">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head" style="background:var(--eco-green);">CUSTOMER ─ 考え方</div>
+    <h2 class="slide-title">同世代の「<span class="accent">生の声</span>」がいちばん強い根拠</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="note-box">
+          <strong>「買う理由」を具体的に書く</strong>
+        </div>
+        <ul class="bul sm">
+          <li>どんな気分のときに欲しくなる？</li>
+          <li>誰と来館したときに買う？</li>
+          <li>どこに置く／飾る／持ち歩く？</li>
+        </ul>
+      </div>
+      <div class="col gap-m">
+        <div class="note-box" style="background:#fff4e6;border-left-color:var(--accent-warm);">
+          <strong>「買わない理由」も同じくらい大事</strong>
+        </div>
+        <ul class="bul sm">
+          <li>かわいいけど、自分の生活に置き場がない</li>
+          <li>高い／重い／持ち帰れない</li>
+          <li>誰かにあげるには気恥ずかしい</li>
+        </ul>
+      </div>
+    </div>
+    <div class="emphasis-box" style="margin-top:16px;">
+      想像で書かない。同世代に聞く・自分の本音を書く。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">10 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 12 : Competitor 問い
+========================================================= -->
+<section data-label="Competitor 問い">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">0:20 - 0:43</div>
+  <div class="content has-badge">
+    <div class="section-head" style="background:var(--accent-warm);">COMPETITOR</div>
+    <div class="big-q">
+      <div class="qmark">?</div>
+      <div class="text">
+        同じ <strong>水族館・動物園</strong> のグッズで、<br>
+        <span class="accent">すでにあるもの</span> は何ですか？<br>
+        あなたの案は、それと <strong>何が違う</strong> ？
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">11 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 13 : Competitor 観察3観点
+========================================================= -->
+<section data-label="Competitor 観察3観点">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head" style="background:var(--accent-warm);">COMPETITOR ─ 観察3観点</div>
+    <h2 class="slide-title">他社グッズを <span class="accent">3つの観点</span> で観察する</h2>
+    <div class="cards c3" style="flex:1;align-items:stretch;">
+      <div class="card green">
+        <div class="num">観点 ①</div>
+        <div class="ttl">形・素材</div>
+        <div class="body">全身ぬいぐるみ？マスコット？小物？<br>素材は何が使われている？</div>
+      </div>
+      <div class="card green">
+        <div class="num">観点 ②</div>
+        <div class="ttl">価格帯</div>
+        <div class="body">いくらで売られている？<br>500円／1,500円／3,000円どこに集中？</div>
+      </div>
+      <div class="card green">
+        <div class="num">観点 ③</div>
+        <div class="ttl">使い方・シーン</div>
+        <div class="body">飾るだけ？持ち歩く？<br>何かと組み合わせて使える？</div>
+      </div>
+    </div>
+    <div class="note-box" style="margin-top:18px;">
+      <strong>「自分の案にないもの」</strong> を見つけたら、それが差別化のヒント。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">12 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 14 : Competitor スマホワーク
+========================================================= -->
+<section data-label="Competitor スマホ5分">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">5分</div>
+  <div class="content has-badge">
+    <div class="section-head" style="background:var(--accent-warm);">WORK ─ Competitor 調査</div>
+    <h2 class="slide-title">スマホで <span class="accent">5分間</span> 検索</h2>
+    <div class="steps" style="margin-top:8px;">
+      <div class="step"><div class="n">1</div><div class="body">「水族館 グッズ ペンギン」「動物園 ペンギン ぬいぐるみ」などで検索する</div></div>
+      <div class="step"><div class="n">2</div><div class="body">気になる商品を <strong>3つ</strong> 選び、観点①②③をメモする</div></div>
+      <div class="step"><div class="n">3</div><div class="body">自分の案と <strong>何が違うか</strong> を一言で書く</div></div>
+    </div>
+    <div class="highlight-box" style="margin-top:18px;">
+      タイマー：5分。手が止まったら、隣の人とどんなのが出てきたか共有OK。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">13 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 15 : Competitor シェアタイム
+========================================================= -->
+<section data-label="Competitor シェア">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head" style="background:var(--accent-warm);">COMPETITOR ─ シェア</div>
+    <h2 class="slide-title">見つけた <span class="accent">「違い」</span> を全員でシェア</h2>
+    <div class="cards c2" style="flex:1;align-items:stretch;">
+      <div class="card green">
+        <div class="ttl">話してほしいこと</div>
+        <ul class="bul sm" style="margin-top:6px;">
+          <li>どんな商品が多かった？</li>
+          <li>逆に <strong>少なかった</strong> のは？</li>
+          <li>自分の案と一番違うのは？</li>
+        </ul>
+      </div>
+      <div class="card yellow">
+        <div class="ttl">聞きながら考えること</div>
+        <ul class="bul sm" style="margin-top:6px;">
+          <li>「自分が見ていなかった視点」をメモする</li>
+          <li>自分の案を <strong>修正できる</strong> 余地はある？</li>
+          <li>新しい切り口は浮かぶ？</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note-box mt-a" style="margin-top:18px;">
+      他の人の発見は、自分の案を強くする <strong>無料のヒント</strong> です。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">14 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 16 : Company 問い
+========================================================= -->
+<section data-label="Company 問い">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">0:43 - 0:58</div>
+  <div class="content has-badge">
+    <div class="section-head" style="background:var(--eco-green-dark);color:#fff;">COMPANY</div>
+    <div class="big-q">
+      <div class="qmark">?</div>
+      <div class="text">
+        他の誰でもなく、<br>
+        <span class="accent">あなただからこそ</span> 出せる案は何ですか？<br>
+        あなたの <strong>武器</strong> は何？
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">15 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 17 : Company 武器①②
+========================================================= -->
+<section data-label="Company 武器①②">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head" style="background:var(--eco-green-dark);">COMPANY ─ あなたの武器</div>
+    <h2 class="slide-title">2つの方向から <span class="accent">「武器」</span> を見つける</h2>
+    <div class="cards c2" style="flex:1;align-items:stretch;">
+      <div class="card green">
+        <div class="num">武器 ①</div>
+        <div class="ttl">あなたが好きなこと・詳しいこと</div>
+        <div class="body" style="font-size:22px;">
+          動物の生態に詳しい／推し活が好き／<br>
+          ファッションに詳しい／ゲームに詳しい／<br>
+          推しがペンギン etc.
+        </div>
+      </div>
+      <div class="card green-fill">
+        <div class="num" style="color:#fff;">武器 ②</div>
+        <div class="ttl">福岡ECO生だからこそ知っていること</div>
+        <div class="body" style="color:#fff;font-size:22px;">
+          飼育の現場を知っている／<br>
+          動物の体の仕組みを学んでいる／<br>
+          来館者を観察してきた経験 etc.
+        </div>
+      </div>
+    </div>
+    <div class="emphasis-box" style="margin-top:18px;">
+      ①と②を <strong>掛け算</strong> すると、あなただけの切り口になる。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">16 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 18 : Company Menti
+========================================================= -->
+<section data-label="Company Menti">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head" style="background:var(--eco-green-dark);">COMPANY ─ Mentimeter</div>
+    <h2 class="slide-title">あなたの <span class="accent">武器</span> を、ひとことで投稿</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="note-box">
+          <strong>お題</strong><br>
+          「あなたが <u>誰にも負けない</u> と思うこと、<br>あるいは <u>福岡ECOで一番学んだ</u> こと」
+        </div>
+        <ul class="bul sm">
+          <li>1人 <strong>2語まで</strong></li>
+          <li>名詞で短く（例：「ペンギンの歩き方」）</li>
+          <li>かっこつけない・本音でOK</li>
+        </ul>
+      </div>
+      <div class="col gap-m">
+        <div class="card yellow" style="flex:1;align-items:center;justify-content:center;text-align:center;">
+          <div class="ttl" style="font-size:30px;">Mentimeter</div>
+          <div class="body" style="font-size:22px;">投稿コード <strong>◯◯◯◯</strong><br>または QR読み取り</div>
+          <div class="img-placeholder" style="min-height:140px;width:80%;margin-top:10px;">
+            <span>QRコード placeholder</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">17 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 19 : 3Cまとめ
+========================================================= -->
+<section data-label="3Cまとめ">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <h2 class="slide-title">3つを <span class="accent">掛け算</span> して企画にする</h2>
+    <div class="cards c3" style="flex:1;align-items:stretch;">
+      <div class="card green">
+        <div class="num">CUSTOMER</div>
+        <div class="ttl">誰が、なぜ買う？</div>
+        <div class="body">同世代の本音から</div>
+      </div>
+      <div class="card yellow">
+        <div class="num" style="color:#b39400;">COMPETITOR</div>
+        <div class="ttl">他社と何が違う？</div>
+        <div class="body">観察3観点から</div>
+      </div>
+      <div class="card green-fill">
+        <div class="num" style="color:#fff;">COMPANY</div>
+        <div class="ttl">あなたの武器は？</div>
+        <div class="body" style="color:#fff;">①好きなこと×②学んだこと</div>
+      </div>
+    </div>
+    <div class="center-stage" style="flex:0;margin-top:16px;">
+      <div class="big-statement" style="font-size:32px;">
+        この <span class="hl">3つが揃った案</span> が、強い案になる。
+      </div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">18 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 20 : 個人ワーク 提出フォーマット6項目
+========================================================= -->
+<section data-label="個人ワーク 提出フォーマット">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge">15分</div>
+  <div class="content has-badge compact">
+    <div class="section-head">INDIVIDUAL WORK</div>
+    <h2 class="slide-title" style="margin-bottom:14px;">アイデア完成シートを <span class="accent">埋める</span></h2>
+    <div class="submit-grid" style="flex:1;">
+      <div class="submit-row"><div class="num">1</div><div class="body"><strong>商品名</strong>（水族館案／動物園案）</div></div>
+      <div class="submit-row"><div class="num">2</div><div class="body"><strong>ターゲット</strong>（同世代のどの層か）</div></div>
+      <div class="submit-row"><div class="num">3</div><div class="body"><strong>欲しくなるシーン</strong>・使うシーン</div></div>
+      <div class="submit-row"><div class="num">4</div><div class="body"><strong>ぬいぐるみ素材</strong> をどう活かすか</div></div>
+      <div class="submit-row"><div class="num">5</div><div class="body"><strong>想定サイズ／想定上代</strong></div></div>
+      <div class="submit-row" style="background:#fffbea;"><div class="num" style="background:var(--accent-warm);">6</div><div class="body"><strong>リサーチ結果</strong>と反映ポイント<br><span style="font-size:18px;color:var(--text-soft);">※今日時点では空欄でOK（宿題で埋める）</span></div></div>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">19 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 21 : 発表時間
+========================================================= -->
+<section data-label="発表">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="time-badge red">1分 × 7名</div>
+  <div class="content has-badge">
+    <h2 class="slide-title">発表 ─ <span class="accent">1人1分</span> で案を共有</h2>
+    <div class="twocol">
+      <div class="col gap-m">
+        <div class="note-box">
+          <strong>話してほしい3点</strong>
+        </div>
+        <ul class="bul sm">
+          <li><strong>誰に</strong> 届けたいか</li>
+          <li><strong>何が違う</strong> のか（他社と）</li>
+          <li>なぜ <strong>あなたが</strong> 出すのか</li>
+        </ul>
+      </div>
+      <div class="col gap-m">
+        <div class="note-box" style="background:#fff4e6;border-left-color:var(--accent-warm);">
+          <strong>聞いている人がやること</strong>
+        </div>
+        <ul class="bul sm">
+          <li>「いいな」と思ったポイントをメモ</li>
+          <li>「もう少し聞きたい」点をメモ</li>
+          <li>自分の案を強くするヒントを拾う</li>
+        </ul>
+      </div>
+    </div>
+    <div class="emphasis-box mt-a" style="margin-top:18px;">
+      この発表は評価ではない。<br>お互いの案を <strong>強くするための時間</strong> です。
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">20 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 22 : 宿題説明
+========================================================= -->
+<section data-label="宿題">
+  <div class="frame-bar"></div>
+  <div class="frame-logo">福岡ECO動物海洋専門学校</div>
+  <div class="content">
+    <div class="section-head" style="background:#e53935;">HOMEWORK</div>
+    <h2 class="slide-title">次回までにやること</h2>
+    <div class="steps" style="margin-top:6px;">
+      <div class="step"><div class="n">1</div><div class="body"><strong>5/25（月）12:00 まで</strong> ／ Teams提出フォルダに1案を投稿</div></div>
+      <div class="step"><div class="n">2</div><div class="body"><strong>5/26〜6/3</strong> ／ 現地視察（水族館・動物園）に行く</div></div>
+      <div class="step"><div class="n">3</div><div class="body"><strong>5/26〜6/3</strong> ／ 同世代5人以上に「欲しい？」「いくらなら買う？」をヒアリング</div></div>
+      <div class="step"><div class="n">4</div><div class="body"><strong>6/4（木）</strong> ／ 第4回授業「価格・コンセプトシート完成」</div></div>
+    </div>
+    <div class="note-box" style="margin-top:14px;">
+      <strong>提出は「下書き」でOK。</strong><br>
+      <span style="font-size:22px;color:var(--text-soft);">6/10の中間プレゼンまでに、リサーチ結果を反映して仕上げます。</span>
+    </div>
+  </div>
+  <div class="frame-footer">
+    <span class="left">株式会社ATARAYO</span>
+    <span class="right">21 / 23</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     SLIDE 23 : 次回予告・クロージング
+========================================================= -->
+<section data-label="クロージング">
+  <div class="section-slide">
+    <div class="tag">NEXT ─ 6 / 4 第4回</div>
+    <h2 style="font-size:80px;">次回までに、<br>案を「育てて」きてください。</h2>
+    <div class="desc">
+      6/4 ／ 価格・コンセプトシート完成 → 6/10 中間プレゼン。<br>
+      リサーチに行った人が、案を強くできる。
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+
+<script src="../deck-stage.js"></script>
+</body>
+</html>
