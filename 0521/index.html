@@ -254,6 +254,29 @@
   .mute{color:var(--text-soft);}
 
   @media print{ body{background:#fff;} }
+
+  /* ── Slide-specific overflow fixes ── */
+  section[data-label="タイムライン"] .slide-title{font-size:28px;margin-bottom:8px;}
+  section[data-label="タイムライン"] .section-head{margin-bottom:6px!important;}
+  section[data-label="タイムライン"] .timeline-table{font-size:16px;}
+  section[data-label="タイムライン"] .timeline-table th,
+  section[data-label="タイムライン"] .timeline-table td{padding:4px 10px!important;}
+
+  section[data-label="AQUA振り返り③"] .note-box{font-size:18px!important;padding:6px 12px!important;}
+  section[data-label="AQUA振り返り③"] .bul.sm li{font-size:17px;}
+  section[data-label="AQUA振り返り③"] .bul{gap:6px;}
+
+  section[data-label="3Cの3つ"] .slide-title{font-size:32px;margin-bottom:12px;}
+  section[data-label="3Cの3つ"] .note-box{margin-top:8px!important;font-size:22px!important;}
+  section[data-label="3Cの3つ"] .card .num{font-size:18px;}
+  section[data-label="3Cの3つ"] .card .ttl{font-size:21px;}
+  section[data-label="3Cの3つ"] .card .body{font-size:18px;}
+  section[data-label="3Cの3つ"] .card{gap:6px;}
+
+  section[data-label="宿題"] .content{padding:36px 48px 32px!important;}
+  section[data-label="宿題"] .slide-title{margin-bottom:12px;}
+  section[data-label="宿題"] .steps{gap:10px;}
+  section[data-label="宿題"] .step{padding:10px 16px;}
 </style>
 </head>
 <body>
@@ -274,11 +297,6 @@
     <div class="subtitle">
       あなたの案を、企画に育てる90分。<br>
       「強い案」を作るための3つの視点を持ち帰る。
-    </div>
-    <div class="meta">
-      <div><strong>日付</strong> ／ 2026年5月21日（木）</div>
-      <div><strong>主催</strong> ／ 株式会社ATARAYO</div>
-      <div><strong>講師</strong> ／ 橋本（オンライン）／ 赤岩（教室）</div>
     </div>
     <div class="proj-badge">株式会社AQUA × 福岡ECO 企業プロジェクト</div>
   </div>
@@ -742,10 +760,24 @@
     <h2 class="slide-title">スマホで <span class="accent">じっくり</span> 検索</h2>
     <div class="steps" style="margin-top:8px;">
       <div class="step"><div class="n">1</div><div class="body">「水族館 グッズ ペンギン」「動物園 ペンギン ぬいぐるみ」などで検索する</div></div>
-      <div class="step"><div class="n">2</div><div class="body">気になる商品を <strong>3つ</strong> 選び、観点①②③をメモする</div></div>
+      <div class="step"><div class="n">2</div><div class="body">気になる商品を <strong>1つ</strong> 選び、観点①②③をメモする</div></div>
       <div class="step"><div class="n">3</div><div class="body">自分の案と <strong>何が違うか</strong> を一言で書く</div></div>
     </div>
-    <div class="highlight-box" style="margin-top:18px;">
+    <div class="cards c3" style="margin-top:12px;gap:10px;">
+      <div class="card green" style="padding:10px 14px;">
+        <div class="num">観点 ①</div>
+        <div class="ttl" style="font-size:22px;">形・素材</div>
+      </div>
+      <div class="card yellow" style="padding:10px 14px;">
+        <div class="num" style="color:#b39400;">観点 ②</div>
+        <div class="ttl" style="font-size:22px;">価格帯</div>
+      </div>
+      <div class="card green" style="padding:10px 14px;">
+        <div class="num">観点 ③</div>
+        <div class="ttl" style="font-size:22px;">使い方・シーン</div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:12px;">
       手が止まったら、隣の人とどんなのが出てきたか共有OK。
     </div>
   </div>
@@ -872,7 +904,6 @@
         </div>
         <ul class="bul sm">
           <li>スマホで今すぐ調べてOK</li>
-          <li>1人 <strong>2〜3語まで</strong></li>
           <li>知らなかったことでも、面白いと思ったことでもOK</li>
         </ul>
       </div>
